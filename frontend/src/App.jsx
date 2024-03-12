@@ -1,8 +1,8 @@
 import { createRoutesFromElements, createBrowserRouter, Route, RouterProvider } from "react-router-dom";
 import RootLayout from "./layouts/RootLayout";
 import Home from "./pages/home/Home";
-import Login from "./pages/login/Login";
-import Signup from "./pages/signup/Signup";
+import Login from "./pages/_auth_/login/Login";
+import Signup from "./pages/_auth_/signup/Signup";
 import About from "./pages/about/About";
 import Contact from "./pages/contact/Contact";
 

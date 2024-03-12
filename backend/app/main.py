@@ -11,6 +11,10 @@ app = FastAPI()
 def read_root():
     return {"Hello": "World"}
 
+@app.get("/about")
+def read_root():
+    return {"Helloooooooooooooooo": "World"}
+
 #Get request to the /items/{item_id} path
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: Union[str, None] = None):
