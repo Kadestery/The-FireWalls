@@ -1,9 +1,9 @@
-import React from 'react'
-
 function Signup() {
   return (
-    <div>Signup</div>
-  )
+    <div className="h-screen flex justify-center items-center">
+      <div>SignUp</div>
+    </div>
+  );
 }
 
-export default Signup
+export default Signup;
