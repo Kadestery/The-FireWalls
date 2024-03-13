@@ -5,6 +5,7 @@ import Login from "./pages/_auth_/login/Login";
 import Signup from "./pages/_auth_/signup/Signup";
 import About from "./pages/about/About";
 import Contact from "./pages/contact/Contact";
+import { signupFormAction } from "./actions/signupFormAction";
 
 export default function App() {
   const router = createBrowserRouter(
@@ -16,7 +17,7 @@ export default function App() {
           <Route path="contact" element={<Contact/>}/>
         </Route>
         <Route path="/login" element={<Login/>} />
-        <Route path="/signup" element={<Signup/>}/>
+        <Route path="/signup" element={<Signup/>} action={signupFormAction}/>
       </>
     )
   );

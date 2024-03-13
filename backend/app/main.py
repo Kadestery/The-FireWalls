@@ -1,22 +1,21 @@
-#You have deprecated linting or formatting settings for Python. Please see the logs for more details
-
-from typing import Union
-
 from fastapi import FastAPI
+from .routes import authRoutes
+
+
+from . import models
+from .database import engine
+
+
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+app.include_router(authRoutes.router)   #Include the router from authRoutes.py
 
 #Get request to the root path
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
 
-@app.get("/about")
-def read_root():
-    return {"Helloooooooooooooooo": "World"}
 
-#Get request to the /items/{item_id} path
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
 

@@ -1,11 +1,11 @@
 import AuthFormHeader from "../AuthFormHeader";
 import { Form } from "react-router-dom";
 
-function Signup() {
+export default function Signup() {
   return (
     <div className="h-screen flex justify-center items-center flex-col">
       <AuthFormHeader heading="Signup to create an account" paragraph="Already have an account? " linkName="Login" linkUrl="/login" />
-      <Form className="w-2/4 mt-4" action="/signup/action">
+      <Form className="w-[500px] mt-4" method="post" >
         <div className="mb-4">
           <label htmlFor="username" className="block text-gray-700 text-sm font-bold mb-2">Username</label>
           <input required type="text" name="username" id="username" className="shadow  border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" />
@@ -24,4 +24,5 @@ function Signup() {
   );
 }
 
-export default Signup;
+
+
