@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulation</title>
+<style>
+    .groupBox {
+        border: 1px solid #ccc;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div id="groupBox">
+    <h2>Simulation Group Box</h2>
+    <button id="editButton">Edit</button>
+</div>
+
+<!-- Modal for editing simulation -->
+<div id="editModal" style="display: none;">
+    <h2>Edit Simulation</h2>
+    <form id="editForm">
+        <label for="room">Room:</label>
+        <select id="roomSelect">
+            <option value="livingRoom">Living Room</option>
+            <option value="bedroom">Bedroom</option>
+            <option value="kitchen">Kitchen</option>
+            <option value="bathroom">Bathroom</option>
+            <option value="outside">Outside</option>
+        </select><br>
+        <label for="action">Action:</label>
+        <select id="actionSelect">
+            <option value="placeInhabitant">Place Inhabitant</option>
+            <option value="blockWindow">Block Window</option>
+        </select><br>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<script>
+    // JavaScript code here
+    const groupBox = document.getElementById('groupBox');
+    const editButton = document.getElementById('editButton');
+    const editModal = document.getElementById('editModal');
+
+    // Function to handle edit button click
+    editButton.addEventListener('click', () => {
+        groupBox.style.display = 'none';
+        editModal.style.display = 'block';
+    });
+
+    // Function to handle form submission
+    const editForm = document.getElementById('editForm');
+    editForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const room = document.getElementById('roomSelect').value;
+        const action = document.getElementById('actionSelect').value;
+        if (action === 'placeInhabitant') {
+            alert(`Placing inhabitant in ${room}`);
+            // Write the placement of person in simulator
+        } else if (action === 'blockWindow') {
+            alert(`Blocking window in ${room}`);
+            // Write the window block in simulator
+        }
+        editModal.style.display = 'none';
+        groupBox.style.display = 'block';
+    });
+</script>
+
+</body>
+</html>
