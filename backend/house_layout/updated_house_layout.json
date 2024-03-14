@@ -1,0 +1,74 @@
+{
+  "Smart Home": {
+    "Rooms": {
+      "Living R": {
+        "Size": "14 x 16",
+        "Features": ["Fireplace", "Cathedral Ceiling"],
+        "AdjacentRooms": ["Dining", "Master Bedroom"],
+        "AccessibleFrom": ["Porch"],
+        "Position": {"x": 195, "y": 410}
+      },
+      "Kit": {
+        "Size": "14 x 16",
+        "Features": [],
+        "AdjacentRooms": ["Dining", "Garage"],
+        "AccessibleFrom": ["Great Room"],
+        "Position": {"x": 365, "y": 220}
+      },
+      "Din": {
+        "Size": "14 x 16",
+        "Features": [],
+        "AdjacentRooms": ["Kitchen", "Great Room"],
+        "AccessibleFrom": ["Kitchen"],
+        "Position": {"x": 195, "y": 215}
+      },
+      "Master": {
+        "Size": "14 x 16",
+        "Features": ["Cathedral Ceiling"],
+        "AdjacentRooms": ["Great Room"],
+        "Attached": ["Master Bath"],
+        "AccessibleFrom": ["Great Room"],
+        "Position": {"x": 30, "y": 220}
+      },
+      "Bath": {
+        "Size": "7 x 8",
+        "Features": ["Skylight"],
+        "AccessibleFrom": ["Master Bedroom"],
+        "Position": {"x": 28, "y": 120}
+      },
+      "Walk": {
+        "Size": "7 x 8",
+        "AccessibleFrom": ["Master Bedroom"],
+        "Position": {"x": 115, "y": 120}
+      },
+      "Bed 2": {
+        "Size": "14 x 16",
+        "Features": ["Potential Future Addition"],
+        "AccessibleFrom": ["Utility"],
+        "Position": {"x": 365, "y": 410}
+      },
+      "Util": {
+        "Size": "8 x 10",
+        "Features": ["Washer", "Dryer", "Bathroom", "Skylight"],
+        "AdjacentRooms": ["Bedroom 2", "Deck"],
+        "AccessibleFrom": ["Great Room"],
+        "Position": {"x": 400, "y": 100}
+      },
+      "Porch": {
+        "Size": "20 x 10",
+        "Position": {"x": 150, "y": 600}
+      },
+      "Deck": {
+        "Size": "12 x 16",
+        "AccessibleFrom": ["Utility"],
+        "Position": {"x": 210, "y": 20}
+      },
+      "Garage": {
+        "Size": "14 x 16",
+        "Features": ["Storage"],
+        "AccessibleFrom": ["Kitchen"],
+        "Position": {"x": 25, "y": 410}
+      }
+    }
+  }
+}
