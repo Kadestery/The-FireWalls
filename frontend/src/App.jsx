@@ -11,28 +11,27 @@ import { signupFormAction } from "./actions/signupFormAction";
 import { loadProfiles } from "./loaders/loadProfiles";
 import { createProfileAction } from "./actions/createProfileAction";
 import { loginFormAction } from "./actions/loginFormAction";
+import PrivateRoute from "./pages/_auth_/PrivateRoute";
+
 
 export default function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
-        <Route path="/" element={<RootLayout />}>
-          <Route index element={<Home />} /> 
-          <Route path="about" element={<About/>} />
-          <Route path="contact" element={<Contact/>}/>
+        <Route path="/" element={ <PrivateRoute><RootLayout /></PrivateRoute>  } >
+          <Route index element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="accounts" element={<Accounts />} loader={loadProfiles} />
+          <Route path="addprofile" element={<AddProfile />} action={createProfileAction} />
         </Route>
-        <Route path="/login" element={<Login/>} action={loginFormAction} />
-        <Route path="/signup" element={<Signup/>} action={signupFormAction}/>
-        <Route path="/accounts" element={<Accounts/>} loader={loadProfiles} />
-        <Route path="/addprofile" element={<AddProfile/>} action={createProfileAction}/>
+        <Route path="/login" element={<Login />} action={loginFormAction} />
+        <Route path="/signup" element={<Signup />} action={signupFormAction} />
       </>
     )
   );
 
-  return (
-    <RouterProvider router={router} />
-  );
+  return <RouterProvider router={router} />;
 }
-
 
 //index = path=""
