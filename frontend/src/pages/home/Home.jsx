@@ -1,9 +1,179 @@
+import React, { useState, useEffect } from 'react';
 
+const Home = () => {
+  // State for user information
+  const [user, setUser] = useState({
+    name: "John Doe",
+    userType: "Admin",
+    location: "Living Room",
+    temperature: 23, // in Celsius
+    dateTime: new Date().toLocaleString() // current date and time
+  });
 
-function Home() {
+  // State for switch status
+  const [switchOn, setSwitchOn] = useState(false);
+
+  // State for active tab
+  const [activeTab, setActiveTab] = useState('SHC');
+
+  // Function to handle user type change
+  const handleUserTypeChange = (e) => {
+    setUser({ ...user, userType: e.target.value });
+  };
+
+  useEffect(() => {
+    // Fetch data from an API or a mock data source
+    // For demonstration, I'm updating temperature every 5 seconds
+    const interval = setInterval(() => {
+      setUser({ ...user, temperature: Math.floor(Math.random() * 15) + 20 });
+    }, 60000);
+
+    return () => clearInterval(interval);
+  }, [user]);
+
+  // Function to handle switch toggle
+  const toggleSwitch = () => {
+    setSwitchOn(!switchOn);
+  };
+
+  // Function to handle tab change
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+  };
+
+  // Function to execute backend commands for SHC module
+  const executeSHCCommand = (command) => {
+    // Execute backend commands here
+    console.log(`Executing command: ${command}`);
+  };
+
+  // Render content based on active tab
+  const renderTabContent = () => {
+    if (!switchOn) {
+      return <p>Program Off</p>;
+    }
+    switch (activeTab) {
+      case 'SHC':
+        return (
+          <div>
+            <p>Content for SHC module goes here.</p>
+            {/* Lights Section */}
+            <div className="mb-4">
+              <h3 className="text-lg font-semibold mb-2">Lights</h3>
+              <div className="flex space-x-4">
+                <button className="px-4 py-2 rounded-md" onClick={() => executeSHCCommand('ON')}>Lights On</button>
+                <button className="px-4 py-2 rounded-md" onClick={() => executeSHCCommand('OFF')}>Lights Off</button>
+              </div>
+            </div>
+            {/* Doors Section */}
+            <div className="mb-4">
+              <h3 className="text-lg font-semibold mb-2">Doors</h3>
+              <div className="flex space-x-4">
+                <button className="px-4 py-2 rounded-md" onClick={() => executeSHCCommand('DOPEN')}>Open Door</button>
+                <button className="px-4 py-2 rounded-md" onClick={() => executeSHCCommand('DCLOSE')}>Close Door</button>
+              </div>
+            </div>
+            {/* Windows Section */}
+            <div className="mb-4">
+              <h3 className="text-lg font-semibold mb-2">Windows</h3>
+              <div className="flex space-x-4">
+                <button className="px-4 py-2 rounded-md" onClick={() => executeSHCCommand('WOPEN')}>Open Window</button>
+                <button className="px-4 py-2 rounded-md" onClick={() => executeSHCCommand('WCLOSE')}>Close Window</button>
+              </div>
+            </div>
+          </div>
+        );
+      case 'SHS':
+        return <p>Content for SHS module goes here.</p>;
+      case 'SHH':
+        return <p>Content for SHH module goes here.</p>;
+      case 'SHP':
+        return <p>Content for SHP module goes here.</p>;
+      default:
+        return null;
+    }
+  };
+
   return (
-    <div>Home</div>
-  )
-}
+    <div className="flex items-center justify-center h-screen">
+      <div className="w-full max-w-4xl">
+        <div className="flex">
+          {/* Left Container for User Information */}
+          <div className="w-1/3 p-4 bg-gray-200 rounded-lg">
+            {/* On/Off Buttons */}
+            <div className="flex items-center justify-center space-x-4">
+              <button
+                className={`px-4 py-2 rounded-full transition-colors duration-300 ${switchOn ? 'bg-gray-600 text-white' : 'bg-gray-200 text-gray-600'}`}
+                onClick={toggleSwitch}
+              >
+                {switchOn ? 'On' : 'Off'}
+              </button>
+              <div
+                className={`w-12 h-6 rounded-full bg-gray-400 flex items-center p-1 cursor-pointer ${switchOn ? 'justify-start' : 'justify-start'}`}
+                onClick={toggleSwitch}
+              >
+                <div className={`w-4 h-4 rounded-full bg-white shadow-md transform duration-300 ${switchOn ? 'translate-x-5' : 'translate-x-0'}`}></div>
+              </div>
+            </div>
+            {/* Profile Picture (You can replace the src with your image URL) */}
+            <div className="mb-4">
+              <img src="profile.jpg" alt="Profile" className="w-24 h-24 rounded-full mx-auto" />
+            </div>
+            {/* User Name */}
+            <div className="mb-4">
+              <h3 className="text-lg font-semibold">{user.name}</h3>
+            </div>
+            {/* User Type */}
+            <div className="mb-4">
+              <label htmlFor="userType" className="block font-semibold">User Type:</label>
+              <select
+                id="userType"
+                value={user.userType}
+                onChange={handleUserTypeChange}
+                className="mt-1 block w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0"
+              >
+                <option value="Parent">Parent</option>
+                <option value="Child">Child</option>
+                <option value="Guest">Guest</option>
+              </select>
+            </div>
+            {/* Location */}
+            <div className="mb-4">
+              <p><strong>Location:</strong> {user.location}</p>
+            </div>
+            {/* Temperature */}
+            <div className="mb-4">
+              <p><strong>Outside Temperature:</strong> {user.temperature}°C</p>
+            </div>
+            {/* Date/Time */}
+            <div className="mb-4">
+              <p><strong>Date/Time:</strong> {user.dateTime}</p>
+            </div>
+          </div>
+          {/* Middle Container for SH Modules*/}
+          <div className="flex-1 p-4 border-solid border-2 border-gray-200 rounded-md">
+            <h3 className="text-lg font-semibold mb-2">Dashboard</h3>
+            {/* Tabs for SH Modules */}
+            <div className="flex space-x-4">
+              <button className={`px-4 py-2 rounded-md ${activeTab === 'SHC' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-600'}`} onClick={() => handleTabChange('SHC')}>SHC</button>
+              <button className={`px-4 py-2 rounded-md ${activeTab === 'SHS' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-600'}`} onClick={() => handleTabChange('SHS')}>SHS</button>
+              <button className={`px-4 py-2 rounded-md ${activeTab === 'SHH' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-600'}`} onClick={() => handleTabChange('SHH')}>SHH</button>
+              <button className={`px-4 py-2 rounded-md ${activeTab === 'SHP' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-600'}`} onClick={() => handleTabChange('SHP')}>SHP</button>
+            </div>
+            {/* Render content based on active tab */}
+            {renderTabContent()}
+          </div>
+          {/* Placeholder for Home Layout */}
+          <div className="w-1/3 p-4 border-solid border-2 border-gray-200 rounded-md">
+            <h3 className="text-lg font-semibold mb-2">Home Layout</h3>
+            {/* Placeholder for Image */}
+            {/* You can replace the src with the URL of the image fetched from the backend */}
+            <img src="placeholder.jpg" alt="Home Layout" className="w-full rounded-lg" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
-export default Home
+export default Home;
