@@ -8,7 +8,6 @@ from .config import settings
 # print(settings.postgres_db)
 
 SQLALCHEMY_DATABASE_URL = f"postgresql://{settings.postgres_user}:{settings.postgres_password}@localhost:5433/{settings.postgres_db}"
-print(SQLALCHEMY_DATABASE_URL)
 
 engine = create_engine( SQLALCHEMY_DATABASE_URL )
 #the engine is the way to connect to the database in sqlalchemy, it first translate the sqlalchemy sql code into normal sql with the database dialect then takes care of the connection pooling and then DBAPI makes the connection to the database

@@ -21,11 +21,12 @@ class Profile(Base):
     user_id = Column(Integer, ForeignKey('users.user_id'))
     profile_username = Column(String)
     profile_type = Column(String)
-    user = relationship("Users", back_populates="profiles")
+    
+    user = relationship("User", back_populates="profiles")
 
     # Add a composite unique constraint
     __table_args__ = (UniqueConstraint('user_id', 'profile_username', name='_user_profile_username_uc'),)
 
-    user = relationship("User", back_populates="profiles")
+    
 
 

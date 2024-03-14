@@ -5,7 +5,7 @@ function Login() {
   return (
     <div className="h-screen flex justify-center items-center flex-col">
       <AuthFormHeader heading="Login to your account" paragraph="Don't have an account yet? " linkName="Signup" linkUrl="/signup" />
-      <Form className="w-[500px] mt-4" action="">
+      <Form className="w-[500px] mt-4" method="post">
         <div className="mb-4">
           <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">Email</label>
           <input required type="email" name="email" id="email" className="shadow  border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" />

@@ -1,15 +1,15 @@
 import { redirect } from "react-router-dom";
 
-export async function signupFormAction({ request }) {
+export async function createProfileAction({ request }) {
   const data = await request.formData();
   const submission = {
+    email: localStorage.getItem("email"),
     username: data.get("username"),
-    email: data.get("email"),
-    password: data.get("password"),
+    profileType: data.get("profileType"),
   };
 
   try {
-    const response = await fetch("/api/auth/signup", {
+    const response = await fetch("/api/profile/createprofile", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -17,11 +17,8 @@ export async function signupFormAction({ request }) {
       body: JSON.stringify(submission),
     });
     if (response.ok) {
-      const data = await response.json();
-      console.log(data);
-      localStorage.setItem("username", data.username);
-      localStorage.setItem("email", data.email);
-      return redirect("/");
+      console.log(response.json())
+      return redirect("/accounts");
     } else {
       const errorData = await response.json();
       console.log(errorData);
