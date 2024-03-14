@@ -28,7 +28,7 @@ def verify_password(plain_password, hashed_password):
 
 
 @router.post("/signup")
-async def read_users(userSignup: UserSignup, db: Session = Depends(get_db)):
+async def create_users(userSignup: UserSignup, db: Session = Depends(get_db)):
     
     has_same_email = get_user_by_email(db, email=userSignup.email)
     if has_same_email:

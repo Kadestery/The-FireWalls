@@ -13,12 +13,12 @@ import { createProfileAction } from "./actions/createProfileAction";
 import { loginFormAction } from "./actions/loginFormAction";
 import PrivateRoute from "./pages/_auth_/PrivateRoute";
 
-
 export default function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
+      // prettier-ignore
       <>
-        <Route path="/" element={ <PrivateRoute><RootLayout /></PrivateRoute>  } >
+        <Route path="/" element={<PrivateRoute> <RootLayout /> </PrivateRoute>}>
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
