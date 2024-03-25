@@ -5,7 +5,7 @@ from ..database import get_db
 from ..schemas import ProfileCreate, ProfileDelete
 
 
-router = APIRouter(prefix="/profile", tags=["Profile"])
+router = APIRouter(prefix="/profile", tags=["profile"])
 
 @router.get("/getprofiles")
 async def get_user_profiles(email: str, db: Session = Depends(get_db)):

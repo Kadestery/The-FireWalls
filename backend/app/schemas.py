@@ -17,4 +17,11 @@ class ProfileCreate(BaseModel):
 class ProfileDelete(BaseModel):
     email: str
     profileUsername: str
+    
+class RoomState(BaseModel):
+    name: str
+    room_type:str
+    window_state: bool
+    door_state: bool
+    light_state: bool
 

@@ -1,13 +1,11 @@
 import { useLoaderData } from "react-router-dom";
-import { IoIosMan } from "react-icons/io";
-import { PiBabyBold } from "react-icons/pi";
-import { FaPlus, FaUserSecret } from "react-icons/fa";
-import { FaPersonWalkingLuggage } from "react-icons/fa6";
+import { FaPlus} from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import ProfilePicture from "../../generalComponents/ProfilePicture";
 
 function Accounts() {
-  let userProfiles = useLoaderData();
+  const userProfiles = useLoaderData();
   const [profiles, setProfiles] = useState(userProfiles);
   const navigate = useNavigate();
 
@@ -36,33 +34,9 @@ function Accounts() {
   };
 
   const profileComponents = profiles.map((profile, index) => {
-    let circleColor = "";
-    let IconComponent = null;
-
-    switch (profile.profile_type) {
-      case "parent":
-        circleColor = "bg-blue-400";
-        IconComponent = <IoIosMan className="w-8 h-8" />;
-        break;
-      case "child":
-        circleColor = "bg-lime-400";
-        IconComponent = <PiBabyBold className="w-8 h-8" />;
-        break;
-      case "guest":
-        circleColor = "bg-yellow-400";
-        IconComponent = <FaPersonWalkingLuggage className="w-8 h-8" />;
-        break;
-      case "stranger":
-        circleColor = "bg-red-400";
-        IconComponent = <FaUserSecret className="w-8 h-8" />;
-        break;
-      default:
-        break;
-    }
-
     return (
-      <div key={index} className="flex flex-col p-4">
-        <div className={`flex items-center justify-center m-2 ${circleColor} rounded-full w-20 h-20`}>{IconComponent}</div>
+      <div key={index} className="flex flex-col p-4 m-2">
+        <ProfilePicture profile_type={profile.profile_type} />
         <p className="text-center">
           {profile.profile_username}: {profile.profile_type}
         </p>

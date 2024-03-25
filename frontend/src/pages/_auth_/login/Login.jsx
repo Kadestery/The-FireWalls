@@ -1,4 +1,4 @@
-import AuthFormHeader from "../AuthFormHeader";
+import AuthFormHeader from "../authComponents/AuthFormHeader";
 import { Form } from "react-router-dom";
 
 function Login() {

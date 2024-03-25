@@ -21,6 +21,7 @@ export async function signupFormAction({ request }) {
       console.log(data);
       localStorage.setItem("username", data.username);
       localStorage.setItem("email", data.email);
+      localStorage.setItem("house_id", data.house_id)
       return redirect("/");
     } else {
       const errorData = await response.json();

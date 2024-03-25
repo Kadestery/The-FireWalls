@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Living Room",
+    "room_type": "LivingRoom",
+    "window": false,
+    "light": false,
+    "door": false
+  },
+  {
+    "name": "Kitchen",
+    "room_type": "Kitchen",
+    "window": false,
+    "light": false,
+    "door": false
+  },
+  {
+    "name": "Master Bedroom",
+    "room_type": "Bedroom",
+    "window": false,
+    "light": false,
+    "door": false
+  },
+  {
+    "name": "Master Bathroom",
+    "room_type": "Bathroom",
+    "window": false,
+    "light": false,
+    "door": false
+  }
+]

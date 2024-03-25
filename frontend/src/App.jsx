@@ -11,7 +11,7 @@ import { signupFormAction } from "./actions/signupFormAction";
 import { loadProfiles } from "./loaders/loadProfiles";
 import { createProfileAction } from "./actions/createProfileAction";
 import { loginFormAction } from "./actions/loginFormAction";
-import PrivateRoute from "./pages/_auth_/PrivateRoute";
+import PrivateRoute from "./generalComponents/PrivateRoute";
 
 
 export default function App() {
@@ -19,7 +19,7 @@ export default function App() {
     createRoutesFromElements(
       <>
         <Route path="/" element={ <PrivateRoute><RootLayout /></PrivateRoute>  } >
-          <Route index element={<Home />} />
+          <Route index element={<Home />}  loader={loadProfiles} />
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
           <Route path="accounts" element={<Accounts />} loader={loadProfiles} />
