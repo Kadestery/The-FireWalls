@@ -2,10 +2,10 @@ import { useLoaderData } from "react-router-dom";
 import { FaPlus} from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import ProfilePicture from "../../generalComponents/ProfilePicture";
+import {ProfilePicture} from "../../generalComponents/ProfileImages";
 
 function Accounts() {
-  const userProfiles = useLoaderData();
+  const userProfiles = useLoaderData().profiles;
   const [profiles, setProfiles] = useState(userProfiles);
   const navigate = useNavigate();
 
@@ -36,7 +36,7 @@ function Accounts() {
   const profileComponents = profiles.map((profile, index) => {
     return (
       <div key={index} className="flex flex-col p-4 m-2">
-        <ProfilePicture profile_type={profile.profile_type} />
+        <ProfilePicture profile_type={profile.profile_type}  />
         <p className="text-center">
           {profile.profile_username}: {profile.profile_type}
         </p>

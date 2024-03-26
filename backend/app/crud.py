@@ -22,7 +22,7 @@ def get_user_by_email(db: Session, email: str):
 
 def create_profile(db: Session, profile_info: schemas.ProfileCreate):
     user = db.query(models.User).filter(models.User.email == profile_info.email).first()
-    db_profile = models.Profile(profile_username=profile_info.username, profile_type=profile_info.profileType, user_id=user.user_id)
+    db_profile = models.Profile(profile_username=profile_info.username, profile_type=profile_info.profile_type, user_id=user.user_id)
     db.add(db_profile)
     db.commit()
     db.refresh(db_profile)
@@ -35,13 +35,20 @@ def get_profiles(db: Session, user_email: str):
     profiles = db.query(models.Profile).filter(models.Profile.user_id == user.user_id).all()
 
     # Extract 'profile_username' and 'profile_type' from each profile
-    profile_info = [{"profile_username": profile.profile_username, "profile_type": profile.profile_type} for profile in profiles]
+    profile_info = [{"profile_username": profile.profile_username, "profile_type": profile.profile_type, "profile_room": profile.room.name if profile.room is not None else None} for profile in profiles]
 
     return profile_info
 
 def delete_profile(db: Session, profile_info: schemas.ProfileDelete):
     user = db.query(models.User).filter(models.User.email == profile_info.email).first()
-    db.query(models.Profile).filter(models.Profile.user_id == user.user_id, models.Profile.profile_username == profile_info.profileUsername).delete()
+    db.query(models.Profile).filter(models.Profile.user_id == user.user_id, models.Profile.profile_username == profile_info.profile_username).delete()
+    db.commit()
+    return
+
+def change_room_to_profile(db: Session, profile_and_room: schemas.RoomToProfileUpdate):
+    user = db.query(models.User).filter(models.User.email == profile_and_room.email).first()
+    profile = db.query(models.Profile).filter(models.Profile.user_id == user.user_id, models.Profile.profile_username == profile_and_room.profile_username).first()
+    profile.room_id = profile_and_room.room_id
     db.commit()
     return
 
