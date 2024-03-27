@@ -4,8 +4,8 @@ from .routes import profileRoutes
 from .routes import roomRoutes
 
 
-from . import models
-from .database import engine
+from .DB import models
+from .DB.database import engine
 
 
 models.Base.metadata.create_all(bind=engine)

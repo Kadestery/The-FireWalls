@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException, Depends
-from ..schemas import UserSignup, UserLogin
-from ..crud import create_user, get_user_by_email, create_house, create_room, get_house
+from ..DB.schemas import UserSignup, UserLogin
+from ..DB.crud import create_user, get_user_by_email, create_house, create_room, get_house
 from sqlalchemy.orm import Session
-from ..database import get_db
+from ..DB.database import get_db
 import bcrypt
 import json
 from pathlib import Path

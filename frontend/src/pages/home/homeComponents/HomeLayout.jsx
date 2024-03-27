@@ -40,7 +40,6 @@ const LightStateIcon = ({ isOpen }) => {
 };
 
 const HomeLayout = ({ rooms }) => {
-  console.log(rooms);
   return (
     <>
       <div className="w-full h-0 border-l-[200px] md:border-l-[150px] border-l-transparent border-b-[100px] border-b-blue-300  border-r-[200px] md:border-r-[150px]  border-r-transparent" />

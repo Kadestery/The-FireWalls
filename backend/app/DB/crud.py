@@ -52,6 +52,8 @@ def change_room_to_profile(db: Session, profile_and_room: schemas.RoomToProfileU
     db.commit()
     return
 
+def get_profile_by_username(db: Session, profile_username: str):
+    return db.query(models.Profile).filter(models.Profile.profile_username == profile_username).first()
 #
 #
 #
@@ -89,5 +91,8 @@ def create_room(db: Session, house_id: int, room_info: dict) -> models.Room:
 def get_rooms_in_house(db: Session, house_id: int):
     rooms = db.query(models.Room).filter(models.Room.house_id == house_id).all()
     return rooms
+
+def get_room_by_id(db: Session, room_id: int):
+    return db.query(models.Room).filter(models.Room.room_id == room_id).first()
 
 

@@ -9,7 +9,7 @@ function SimulationInfo({ rooms, setRooms, profiles, setProfiles, currentProfile
 
     // Assuming `profile` is a JSON string that needs parsing to access its properties
     const profile = JSON.parse(event.target.profile.value);
-    const location = event.target.location.value;
+    const room = JSON.parse(event.target.location.value);
 
     try {
       const response = await fetch(`/api/profile/room-to-profile?house_id=${encodeURIComponent(localStorage.getItem("house_id"))}`, {
@@ -20,7 +20,7 @@ function SimulationInfo({ rooms, setRooms, profiles, setProfiles, currentProfile
         body: JSON.stringify({
           email: localStorage.getItem("email"),
           profile_username: profile.profile_username,
-          room_id: location,
+          room_id: room.room_id,
         }),
       });
 
@@ -32,7 +32,7 @@ function SimulationInfo({ rooms, setRooms, profiles, setProfiles, currentProfile
 
       setProfiles(data.user_profiles);
       setRooms(data.rooms);
-      setCurrentProfile({ profile_username: profile.profile_username, profile_type: profile.profile_type, profile_room: location });
+      setCurrentProfile({ profile_username: profile.profile_username, profile_type: profile.profile_type, profile_room: room.name });
     } catch (error) {
       console.error("Error during API call:", error);
     }
@@ -40,8 +40,8 @@ function SimulationInfo({ rooms, setRooms, profiles, setProfiles, currentProfile
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <p className="text-xl font-semibold mb-14">Set Context Of Simulation</p>
-      <p>
+
+      <p className="mb-4 text-xl">
         username: <span className="font-medium">{currentProfile.profile_username}</span>
       </p>
       <ProfilePicture profile_type={currentProfile.profile_type} />
@@ -76,7 +76,7 @@ function SimulationInfo({ rooms, setRooms, profiles, setProfiles, currentProfile
             <option value="">Select a location</option>
             {rooms.map((room, index) => {
               return (
-                <option key={index} value={room.room_id}>
+                <option key={index} value={JSON.stringify({"room_id":room.room_id, "name": room.name})}>
                   {room.name}
                 </option>
               );

@@ -3,6 +3,8 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import UniqueConstraint
 from sqlalchemy.sql import func
 from .database import Base  # Ensure you have a database module with Base
+from sqlalchemy.types import Enum
+from ..DB.schemas import ProfileType
 
 class User(Base):
     __tablename__ = "users"
@@ -21,7 +23,7 @@ class Profile(Base):
     profile_id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.user_id'))
     profile_username = Column(String)
-    profile_type = Column(String)
+    profile_type = Column(Enum(ProfileType), name='profile_type')
     
     room_id = Column(Integer, ForeignKey('rooms.room_id'), nullable=True)
     # nullable=True means a profile might not be associated with any room
@@ -30,6 +32,7 @@ class Profile(Base):
     room = relationship("Room", back_populates="profiles", uselist=False)  # uselist=False indicates one-to-one relationship
     
     __table_args__ = (UniqueConstraint('user_id', 'profile_username', name='_user_profile_username_uc'),)
+    
     
     
 class House(Base):

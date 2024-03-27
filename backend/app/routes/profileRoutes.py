@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from ..crud import get_profiles, create_profile, delete_profile, change_room_to_profile, get_rooms_in_house
-from ..database import get_db
-from ..schemas import ProfileCreate, ProfileDelete, RoomToProfileUpdate
+from ..DB.crud import get_profiles, create_profile, delete_profile, change_room_to_profile, get_rooms_in_house
+from ..DB.database import get_db
+from ..DB.schemas import ProfileCreate, ProfileDelete, RoomToProfileUpdate
 
 
 router = APIRouter(prefix="/profile", tags=["profile"])
