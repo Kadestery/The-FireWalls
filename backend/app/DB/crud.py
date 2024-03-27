@@ -96,3 +96,5 @@ def get_room_by_id(db: Session, room_id: int):
     return db.query(models.Room).filter(models.Room.room_id == room_id).first()
 
 
+    
+

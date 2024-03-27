@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from ..DB.crud import get_rooms_in_house, get_profile_by_username, get_room_by_id
 from ..DB import schemas
 from ..designPatterns.StrategyPattern.strategy_methods import get_permissions
+from ..designPatterns.CommandPattern.command_methods import execute_all_command_methods
 
 router = APIRouter(prefix="/room", tags=["room"])
 
@@ -17,12 +18,9 @@ async def get_rooms(house_id: int, db: Session = Depends(get_db)):
     return filtered_rooms
 
 
-from ..DB.models import Profile, Room
-from sqlalchemy.orm import Session
-from typing import Any
 
 @router.put("/room-action")
-async def perform_room_action(profile_commands: schemas.RoomAction, db: Session = Depends(get_db)) -> Any:
+async def perform_room_action(profile_commands: schemas.RoomAction, db: Session = Depends(get_db)) :
     # Retrieve the profile and room from the database
     profile = get_profile_by_username(db, profile_commands.profile_username)
     room = get_room_by_id(db, profile_commands.room_id)
@@ -34,20 +32,7 @@ async def perform_room_action(profile_commands: schemas.RoomAction, db: Session 
     if not get_permissions(profile.profile_type, profile_commands.action_type):
         raise HTTPException(status_code=403, detail="Permission denied")
         
-
-    # Assuming action types directly correspond to changes on the room object
-    # For example, if ActionType.CHANGE_LIGHT is received, it toggles the light state of the room
-    # You'll need to adjust this part based on your actual ActionType enum and room model
-    if profile_commands.action_type == schemas.ActionType.CHANGE_LIGHT:
-        room.light_state = not room.light_state
-    elif profile_commands.action_type == schemas.ActionType.CHANGE_WINDOW:
-        room.window_state = not room.window_state
-    elif profile_commands.action_type == schemas.ActionType.CHANGE_DOOR:
-        room.door_state = not room.door_state
-    else:
-        raise HTTPException(status_code=400, detail="Unknown or unsupported action type")
-
-    db.commit()  # Commit the changes to the database
-
-    # Optionally, return the updated room state or all rooms in the house
-    return {"message": "Action performed successfully"}
+    # Execute the command on the room object
+    return execute_all_command_methods(db, profile_commands.room_id, room.room_type, profile_commands.action_type)
+    
+    
