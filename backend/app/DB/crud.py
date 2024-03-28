@@ -96,5 +96,31 @@ def get_room_by_id(db: Session, room_id: int):
     return db.query(models.Room).filter(models.Room.room_id == room_id).first()
 
 
+#
+#
+#
+## Zone route CRUD operations
+
+def create_zone(db: Session, zone_create: schemas.ZoneCreate, house_id: int) -> models.Zone:
+    db_zone = models.Zone(**zone_create.dict(), house_id=house_id)
+    db.add(db_zone)
+    db.commit()
+    db.refresh(db_zone)
+    return db_zone
+
+def get_zones(db: Session, house_id: int):
+    return db.query(models.Zone).filter(models.Zone.house_id == house_id).all()
+
+def update_zone(db: Session, zone_id: int, zone_update: schemas.ZoneUpdate):
+    db.query(models.Zone).filter(models.Zone.zone_id == zone_id).update(zone_update.dict())
+    db.commit()
+    return db.query(models.Zone).filter(models.Zone.zone_id == zone_id).first()
+
+def delete_zone(db: Session, zone_id: int):
+    db.query(models.Zone).filter(models.Zone.zone_id == zone_id).delete()
+    db.commit()
+
+
+
     
 

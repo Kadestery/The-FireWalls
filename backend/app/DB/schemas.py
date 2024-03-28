@@ -55,3 +55,29 @@ class RoomAction(BaseModel):
     room_id: int
     profile_username: str
     action_type: ActionType
+    
+    
+    
+##
+##
+
+class TemperatureSettingBase(BaseModel):
+    period: int
+    temp: int
+
+class ZoneCreate(BaseModel):
+    name: str
+    temperature_settings: list[TemperatureSettingBase]
+
+class ZoneUpdate(ZoneCreate):
+    pass
+
+class Zone(TemperatureSettingBase):
+    zone_id: int
+    house_id: int
+    name: str
+    temperature_settings: list[TemperatureSettingBase]
+
+    class Config:
+        orm_mode = True #When you set orm_mode = True, Pydantic treats the dictionary returned by the ORM as a special dictionary, enabling it to access attributes on ORM models as if they were dictionary keys. 
+
