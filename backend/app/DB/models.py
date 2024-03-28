@@ -1,7 +1,6 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Boolean
+from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, JSON
 from sqlalchemy.orm import relationship
 from sqlalchemy import UniqueConstraint
-from sqlalchemy.sql import func
 from .database import Base  # Ensure you have a database module with Base
 from sqlalchemy.types import Enum
 from ..DB.schemas import ProfileType
@@ -43,6 +42,7 @@ class House(Base):
     
     user = relationship("User", back_populates="house")
     rooms = relationship("Room", back_populates="house")
+    zones = relationship("Zone", back_populates="house")  # This line establishes the relationship to zones
     
     
 class Room(Base):
@@ -50,17 +50,32 @@ class Room(Base):
     
     room_id = Column(Integer, primary_key=True)
     house_id = Column(Integer, ForeignKey('houses.house_id'))
+    zone_id = Column(Integer, ForeignKey('zones.zone_id'), nullable=True)  # Allows association with a Zone
     name = Column(String)
     room_type = Column(String)
-    window_state = Column(Boolean, default=False)  # False for closed, True for open
+    window_state = Column(Boolean, default=False)
     door_state = Column(Boolean, default=False)
     light_state = Column(Boolean, default=False)
     
     house = relationship("House", back_populates="rooms")
     profiles = relationship("Profile", back_populates="room")
+    zone = relationship("Zone", backref="rooms")  # Establishes the back-reference from Zone
     
     # Adjusted to enforce uniqueness of room names within each house
     __table_args__ = (UniqueConstraint('house_id', 'name', name='_house_room_name_uc'),)
     
+    
+class Zone(Base):
+    __tablename__ = "zones"
 
+    zone_id = Column(Integer, primary_key=True)
+    house_id = Column(Integer, ForeignKey('houses.house_id'))
+    name = Column(String)
+
+    # Additional fields to directly manage temperature settings within a zone
+    # This could be a JSON field or separate columns depending on your database's capabilities and preferences
+    temperature_settings = Column(JSON)  # Example structure: [{"period": 1, "temp": 22}, {"period": 2, "temp": 18}]
+
+    house = relationship("House", back_populates="zones")
+    rooms = relationship("Room", backref="zone")
 

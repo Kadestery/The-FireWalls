@@ -89,7 +89,7 @@ def create_room(db: Session, house_id: int, room_info: dict) -> models.Room:
     return new_room
 
 def get_rooms_in_house(db: Session, house_id: int):
-    rooms = db.query(models.Room).filter(models.Room.house_id == house_id).all()
+    rooms = db.query(models.Room).filter(models.Room.house_id == house_id).order_by(models.Room.room_id).all()
     return rooms
 
 def get_room_by_id(db: Session, room_id: int):
