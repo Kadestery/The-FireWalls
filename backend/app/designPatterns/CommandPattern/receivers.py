@@ -8,10 +8,12 @@ class Light:
         room = get_room_by_id(db, room_id)
         room.light_state = not room.light_state
         db.commit()
+        print(room.light_state)
         if room.light_state == False:
-            return {"message": "The light is off"}
+            print("inside")
+            return "Light turned off"
         else:
-            return {"message": "The light is on"}
+            return "Light turned on"
 
 class Window:
     @staticmethod
@@ -20,9 +22,9 @@ class Window:
         room.window_state = not room.window_state
         db.commit()
         if room.window_state == False:
-            return {"message": "The window is closed"}
+            return "The window is closed"
         else:
-            return {"message": "The window is open"}
+            return "The window is open"
 
 class Door:
     @staticmethod
@@ -31,6 +33,6 @@ class Door:
         room.door_state = not room.door_state
         db.commit()
         if room.door_state == False:
-            return {"message": "The door is closed"}
+            return "The door is closed"
         else:   
-            return {"message": "The door is open"}
+            return "The door is open"

@@ -4,7 +4,7 @@ function SetupSimulationContext({ setDate, setTemperature }) {
 
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center bg-slate-200 rounded-lg p-4">
       <p className="text-xl font-semibold mb-14">Set Context Of Simulation</p>
       <div className="w-full mb-5">
         <label htmlFor="temperature" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">

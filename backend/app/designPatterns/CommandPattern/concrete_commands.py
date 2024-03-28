@@ -7,7 +7,7 @@ class ChangeLightStateCommand(Command):
         self.light = light
         
     def execute(self, db: Session, room_id: int):
-        self.light.changeLight(db, room_id)
+        return self.light.changeLight(db, room_id)
         
 
 class ChangeWindowStateCommand(Command):
@@ -15,7 +15,7 @@ class ChangeWindowStateCommand(Command):
         self.window = window
         
     def execute(self, db: Session, room_id: int):
-        self.window.changeWindow(db, room_id)
+        return self.window.changeWindow(db, room_id)
         
         
 class ChangeDoorStateCommand(Command):
@@ -23,6 +23,6 @@ class ChangeDoorStateCommand(Command):
         self.door = door
         
     def execute(self, db: Session, room_id: int):
-        self.door.changeDoor(db, room_id)
+        return self.door.changeDoor(db, room_id)
         
 

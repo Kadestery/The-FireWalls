@@ -20,19 +20,25 @@ async def get_rooms(house_id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/room-action")
-async def perform_room_action(profile_commands: schemas.RoomAction, db: Session = Depends(get_db)) :
+async def perform_room_action(profile_commands: schemas.RoomAction, house_id: int, db: Session = Depends(get_db)) :
     # Retrieve the profile and room from the database
     profile = get_profile_by_username(db, profile_commands.profile_username)
-    room = get_room_by_id(db, profile_commands.room_id)
+    room = get_room_by_id(db, profile_commands.room_id) 
     
     if not profile or not room:
         raise HTTPException(status_code=404, detail="Profile or Room not found")
     
     # Check if the profile has permission to perform the action
-    if not get_permissions(profile.profile_type, profile_commands.action_type):
-        raise HTTPException(status_code=403, detail="Permission denied")
-        
+    if not get_permissions(profile.profile_type.value, profile_commands.action_type):
+        print("Permission denied")
+        raise HTTPException(status_code=403, detail=f"Permission denied, {profile.profile_type.value} does not have permission to perform {profile_commands.action_type}")
+    
+    
+    rooms = get_rooms_in_house(db, house_id)
     # Execute the command on the room object
-    return execute_all_command_methods(db, profile_commands.room_id, room.room_type, profile_commands.action_type)
+    commang_log = execute_all_command_methods(db, profile_commands.room_id, room.room_type, profile_commands.action_type)
+    print(commang_log)
+    filtered_rooms = [ { "room_id": room.room_id, "profiles_in_room": [ {"profile_id": profile.profile_id, "profile_username": profile.profile_username, "profile_type": profile.profile_type} for profile in room.profiles ], "name": room.name, "room_type": room.room_type, "window_state": room.window_state, "door_state": room.door_state, "light_state": room.light_state } for room in rooms ]
+    return {"command_log": commang_log, "rooms": filtered_rooms}
     
     

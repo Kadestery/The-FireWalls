@@ -19,7 +19,7 @@ function Accounts() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          profileUsername: profileUsername,
+          profile_username: profileUsername,
           email: localStorage.getItem("email"),
         }),
       });

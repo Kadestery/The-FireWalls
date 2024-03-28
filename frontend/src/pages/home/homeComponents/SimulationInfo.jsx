@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { ProfilePicture } from "../../../generalComponents/ProfileImages";
 
 
-function SimulationInfo({ rooms, setRooms, profiles, setProfiles, currentProfile, setCurrentProfile, date, temperature }) {
+function SimulationInfo({ rooms, setRooms, setCurrentRoom, profiles, setProfiles, currentProfile, setCurrentProfile, date, temperature }) {
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -33,13 +33,14 @@ function SimulationInfo({ rooms, setRooms, profiles, setProfiles, currentProfile
       setProfiles(data.user_profiles);
       setRooms(data.rooms);
       setCurrentProfile({ profile_username: profile.profile_username, profile_type: profile.profile_type, profile_room: room.name });
+      setCurrentRoom(room);
     } catch (error) {
       console.error("Error during API call:", error);
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center bg-slate-200 rounded-lg p-4 ">
 
       <p className="mb-4 text-xl">
         username: <span className="font-medium">{currentProfile.profile_username}</span>
@@ -76,7 +77,7 @@ function SimulationInfo({ rooms, setRooms, profiles, setProfiles, currentProfile
             <option value="">Select a location</option>
             {rooms.map((room, index) => {
               return (
-                <option key={index} value={JSON.stringify({"room_id":room.room_id, "name": room.name})}>
+                <option key={index} value={JSON.stringify(room)}>
                   {room.name}
                 </option>
               );
@@ -131,6 +132,7 @@ SimulationInfo.propTypes = {
     })
   ),
   setRooms: PropTypes.func.isRequired,
+  setCurrentRoom: PropTypes.func,
   date: PropTypes.PropTypes.string,
   temperature: PropTypes.PropTypes.string,
 };

@@ -3,9 +3,10 @@ from .permission_strategies import Context , ParentPermissionStrategy, ChildPerm
 from app.DB.schemas import ActionType
 
 def get_permissions(profile_type: str, action: ActionType):
-     context = Context()
+     
+    context = Context()
     # Create a context object with the profile's permission strategy
-     match profile_type:
+    match profile_type:
         case "parent":
             context.set_permission_strategy(ParentPermissionStrategy()) 
         case "child":
@@ -16,5 +17,6 @@ def get_permissions(profile_type: str, action: ActionType):
             context.set_permission_strategy(StrangerPermissionStrategy())
         case _:
             raise HTTPException(status_code=400, detail="Unknown profile type")
+    
         
-     return context.executeStrategy(action)
+    return context.executeStrategy(action)

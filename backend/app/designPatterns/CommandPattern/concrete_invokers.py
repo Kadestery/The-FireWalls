@@ -10,7 +10,7 @@ class LivingRoom(RoomInvoker):
         
     def executeCommand(self, db: Session, room_id: int):
         if self.command:
-            self.command.execute()
+            return self.command.execute(db, room_id)
         
 class Kitchen(RoomInvoker):
     def __init__(self, command=None):
@@ -21,7 +21,7 @@ class Kitchen(RoomInvoker):
         
     def executeCommand(self, db: Session, room_id: int):
         if self.command:
-            self.command.execute()
+           return self.command.execute(db, room_id)
         
 class Bedroom(RoomInvoker):
     def __init__(self, command=None):
@@ -32,7 +32,7 @@ class Bedroom(RoomInvoker):
         
     def executeCommand(self, db: Session, room_id: int):
         if self.command:
-            self.command.execute()
+            return self.command.execute(db, room_id)
         
 class Bathroom(RoomInvoker):
     def __init__(self, command=None):
@@ -43,4 +43,4 @@ class Bathroom(RoomInvoker):
         
     def executeCommand(self, db: Session, room_id: int):
         if self.command:
-            self.command.execute()
+            return self.command.execute(db, room_id)

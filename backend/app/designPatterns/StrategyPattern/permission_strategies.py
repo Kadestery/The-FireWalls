@@ -48,8 +48,8 @@ class Context:
     """
     Context class that holds a reference to the current permission strategy.
     """
-    def __init__(self, permission_strategy: PermissionStrategy):
-        self.permission_strategy = permission_strategy
+    def __init__(self):
+        self.permission_strategy = None
 
     def set_permission_strategy(self, permission_strategy: PermissionStrategy):
         self.permission_strategy = permission_strategy

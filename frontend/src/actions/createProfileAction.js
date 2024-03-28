@@ -2,10 +2,11 @@ import { redirect } from "react-router-dom";
 
 export async function createProfileAction({ request }) {
   const data = await request.formData();
+  console.log(localStorage.getItem("email"), data.get("username"), data.get("profileType"));
   const submission = {
     email: localStorage.getItem("email"),
     username: data.get("username"),
-    profileType: data.get("profileType"),
+    profile_type: data.get("profileType"),
   };
 
   try {
