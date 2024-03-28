@@ -1,9 +1,5 @@
 from fastapi import FastAPI
-from .routes import authRoutes
-from .routes import profileRoutes
-from .routes import roomRoutes
-
-
+from .routes import authRoutes, profileRoutes, roomRoutes
 from .DB import models
 from .DB.database import engine
 
