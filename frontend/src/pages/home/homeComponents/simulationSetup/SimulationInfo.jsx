@@ -1,8 +1,41 @@
 import PropTypes from "prop-types";
-import { ProfilePicture } from "../../../generalComponents/ProfileImages";
+import { ProfilePicture } from "../../../../generalComponents/ProfileImages";
+import { useEffect, useState } from "react";
 
+function SimulationInfo({ rooms, setRooms, setCurrentRoom, profiles, setProfiles, currentProfile, setCurrentProfile, date, setDate, temperature, setTemperature, temperatureData }) {
+  const [lastIndex, setLastIndex] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDate((currentDate) => {
+        const date = new Date(currentDate);
+        date.setMinutes(date.getMinutes() + 1);
 
-function SimulationInfo({ rooms, setRooms, setCurrentRoom, profiles, setProfiles, currentProfile, setCurrentProfile, date, temperature }) {
+        const newDateStr = `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}T${("0" + date.getHours()).slice(-2)}:${("0" + date.getMinutes()).slice(-2)}`;
+        return newDateStr;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Separate effect to update temperature based on the new date
+  useEffect(() => {
+    let found = false;
+    for (let i = lastIndex; i < temperatureData.length; i++) {
+      if (temperatureData[i].date > date) {
+        if (i > 0) {
+          setTemperature(temperatureData[i - 1].temperature);
+          setLastIndex(i - 1);
+          found = true;
+          break;
+        }
+      }
+    }
+
+    if (!found && lastIndex < temperatureData.length) {
+      setTemperature(temperatureData[temperatureData.length - 1].temperature);
+      setLastIndex(temperatureData.length);
+    }
+  }, [date]);
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -25,7 +58,7 @@ function SimulationInfo({ rooms, setRooms, setCurrentRoom, profiles, setProfiles
       });
 
       if (!response.ok) {
-        console.log("Error during API call")
+        console.log("Error during API call");
       }
       const data = await response.json();
       console.log(data);
@@ -41,7 +74,6 @@ function SimulationInfo({ rooms, setRooms, setCurrentRoom, profiles, setProfiles
 
   return (
     <div className="flex flex-col items-center justify-center bg-slate-200 rounded-lg p-4 ">
-
       <p className="mb-4 text-xl">
         username: <span className="font-medium">{currentProfile.profile_username}</span>
       </p>
@@ -96,9 +128,8 @@ function SimulationInfo({ rooms, setRooms, setCurrentRoom, profiles, setProfiles
       </div>
 
       <div className="w-full mb-5">
-        <p className="text-center">
-          simulation Date: <span className="text-blue-600 font-medium">{date}</span>{" "}
-        </p>
+        <p className="text-center">simulation Date:</p>
+        <p className="text-center text-blue-600 font-medium">{date}</p>
       </div>
     </div>
   );
@@ -134,5 +165,13 @@ SimulationInfo.propTypes = {
   setRooms: PropTypes.func.isRequired,
   setCurrentRoom: PropTypes.func,
   date: PropTypes.PropTypes.string,
+  setDate: PropTypes.func,
   temperature: PropTypes.PropTypes.string,
+  setTemperature: PropTypes.func,
+  temperatureData: PropTypes.arrayOf(
+    PropTypes.shape({
+      date: PropTypes.string.isRequired,
+      temperature: PropTypes.string.isRequired,
+    })
+  ),
 };

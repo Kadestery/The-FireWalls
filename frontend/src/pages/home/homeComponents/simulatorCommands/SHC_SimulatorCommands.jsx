@@ -1,9 +1,7 @@
 import PropTypes from "prop-types";
-import Console from "./Console";
-import { useState } from "react";
 
-function SHC_SimulatorCommands({ currentProfile, currentRoom, setRooms, setCurrentRoom }) {
-  const [logs, setLogs] = useState([]); //display logs when simulation is running for open close light etc
+
+function SHC_SimulatorCommands({ currentProfile, currentRoom, setRooms, setCurrentRoom, setLogs }) {
 
   const handleStateChange = async (event) => {
     try {
@@ -25,16 +23,17 @@ function SHC_SimulatorCommands({ currentProfile, currentRoom, setRooms, setCurre
       }
       const data = await response.json();
       const editedRoom = data.rooms.find((room) => room.room_id === currentRoom.room_id);
+      console.log(editedRoom)
       setRooms(data.rooms);
       setCurrentRoom(editedRoom);
-      setLogs([...logs, { room_name: currentRoom.name, action_on_room: data.command_log }]);
+      setLogs((prevLogs) => [...prevLogs, { room_name: currentRoom.name, action_on_room: data.command_log }]);
     } catch (error) {
-      setLogs([...logs, { room_name: currentRoom.name, action_on_room: error.message }]);
+      setLogs((prevLogs) => [...prevLogs, { room_name: currentRoom.name, action_on_room: error.message }]);
     }
   };
 
   return (
-    <div className="flex flex-col justify-between h-full ">
+    
       <div className=" border border-black border-opacity-50 rounded-md ">
         <p className="text-blue-600 text-center font-medium border-b border-black border-opacity-50 py-4">Items</p>
         {!currentRoom && <p className="text-center text-red-500 font-medium px-16 py-4">select a room and a profile</p>}
@@ -76,8 +75,6 @@ function SHC_SimulatorCommands({ currentProfile, currentRoom, setRooms, setCurre
           </div>
         )}
       </div>
-      <Console logs={logs} />
-    </div>
   );
 }
 
@@ -99,4 +96,5 @@ SHC_SimulatorCommands.propTypes = {
   }),
   setRooms: PropTypes.func,
   setCurrentRoom: PropTypes.func,
+  setLogs: PropTypes.func,
 };

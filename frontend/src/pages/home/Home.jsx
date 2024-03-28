@@ -1,7 +1,7 @@
-import SetupSimulationContext from "./homeComponents/SetupSimulationContext";
-import SimulationInfo from "./homeComponents/SimulationInfo";
+import SetupSimulationContext from "./homeComponents/simulationSetup/SetupSimulationContext";
+import SimulationInfo from "./homeComponents/simulationSetup/SimulationInfo";
 import HomeLayout from "./homeComponents/HomeLayout";
-import SHC_SimulatorCommands from "./homeComponents/SHC_SimulatorCommands";
+import SimulatorCommands from "./homeComponents/SimulatorCommands";
 import { useLoaderData } from "react-router-dom";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -17,6 +17,7 @@ function Home() {
   const [currentRoom, setCurrentRoom] = useState();
   const [simulationRunning, setSimulationRunning] = useState(false);
   const [temperature, setTemperature] = useState("");
+  const [temperatureData, setTemperatureData] = useState([]);
   const [date, setDate] = useState("");
 
   return (
@@ -31,6 +32,11 @@ function Home() {
             onChange={() => {
               if ((!temperature || !date) && !simulationRunning) alert("Please set the simulation context");
               else {
+                if(simulationRunning){
+                  setTemperature()
+                  setTemperatureData([])
+                  setDate()
+                }
                 setSimulationRunning(!simulationRunning);
                 setCurrentProfile({ profile_username: "TBD", profile_type: "TBD" });
                 setCurrentRoom();
@@ -47,10 +53,10 @@ function Home() {
 
       <div className="flex justify-center mt-4">
         <div className="flex flex-row justify-center items-stretch border-2 border-blue-500 rounded-md">
-          <div className="pe-4 ps-8 my-auto ">{simulationRunning ? <SimulationInfo rooms={rooms} setRooms={setRooms} setCurrentRoom={setCurrentRoom} profiles={profiles} setProfiles={setProfiles} currentProfile={currentProfile} setCurrentProfile={setCurrentProfile} date={date} temperature={temperature} /> : <SetupSimulationContext setTemperature={setTemperature} setDate={setDate} />}</div>
+          <div className="pe-4 ps-8 my-auto ">{simulationRunning ? <SimulationInfo rooms={rooms} setRooms={setRooms} setCurrentRoom={setCurrentRoom} profiles={profiles} setProfiles={setProfiles} currentProfile={currentProfile} setCurrentProfile={setCurrentProfile} date={date} setDate={setDate} temperature={temperature} setTemperature={setTemperature} temperatureData={temperatureData} /> : <SetupSimulationContext setTemperature={setTemperature} setDate={setDate} setTemperatureData={setTemperatureData} />}</div>
           {simulationRunning && (
             <div className="py-16">
-              <SHC_SimulatorCommands currentRoom={currentRoom} currentProfile={currentProfile} setRooms={setRooms} setCurrentRoom={setCurrentRoom} />
+              <SimulatorCommands currentRoom={currentRoom} currentProfile={currentProfile} setRooms={setRooms} setCurrentRoom={setCurrentRoom} />
             </div>
           )}
           <div className="pe-8 ps-4 py-2 ">

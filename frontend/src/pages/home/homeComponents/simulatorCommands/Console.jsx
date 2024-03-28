@@ -10,12 +10,12 @@ function Console({ logs }) {
       }, [logs]);
 
     return (
-      <div className="h-48 overflow-y-auto overflow-x-auto border-2 border-gray-500 p-4 w-[400px] bg-gray-400 rounded-lg">
+      <div className="h-48 overflow-auto p-4 border-2 border-gray-500  w-[400px] bg-gray-400 rounded-lg">
         {logs.length > 0 ? (
           logs.map((log, index) => (
-            <div key={index} className="whitespace-nowrap">
+            <p key={index} className="whitespace-nowrap inline-block pr-4">
               {`${log.room_name}: ${log.action_on_room}`}
-            </div>
+            </p>
           ))
         ) : (
           <p className="text-center font-medium">No logs to display yet</p>
