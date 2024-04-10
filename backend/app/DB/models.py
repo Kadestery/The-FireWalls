@@ -49,7 +49,6 @@ class Room(Base):
     
     room_id = Column(Integer, primary_key=True)
     house_id = Column(Integer, ForeignKey('houses.house_id'))
-    zone_id = Column(Integer, ForeignKey('zones.zone_id'), nullable=True)  # Allows association with a Zone
     name = Column(String)
     room_type = Column(String)
     window_state = Column(Boolean, default=False)
