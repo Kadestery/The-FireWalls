@@ -1,9 +1,13 @@
 import PropTypes from "prop-types";
 
 
-function SHC_SimulatorCommands({ currentProfile, currentRoom, setRooms, setCurrentRoom, setLogs }) {
+function SHC_SimulatorCommands({ currentProfile, currentRoom, setRooms, setCurrentRoom, setLogs, setZones, date, awayMode }) {
 
   const handleStateChange = async (event) => {
+    if(awayMode && (event.target.value == "changeDoor"|| event.target.value == "changeWindow") && (event.target.id == "windowOpen"|| event.target.id == "doorOpen")) {
+      setLogs((prevLogs) => [...prevLogs, {date:date, message:"Away mode is active, you can't open the door or window"}]);
+      return
+    }
     try {
       const response = await fetch(`api/room/room-action?house_id=${encodeURIComponent(localStorage.getItem("house_id"))}`, {
         method: "PUT",
@@ -26,9 +30,10 @@ function SHC_SimulatorCommands({ currentProfile, currentRoom, setRooms, setCurre
       console.log(editedRoom)
       setRooms(data.rooms);
       setCurrentRoom(editedRoom);
-      setLogs((prevLogs) => [...prevLogs, { room_name: currentRoom.name, action_on_room: data.command_log }]);
+      setZones(data.zones); 
+      setLogs((prevLogs) => [...prevLogs, {date:date, message:`Action on room ${currentRoom.name} -> ${data.command_log}`}]);
     } catch (error) {
-      setLogs((prevLogs) => [...prevLogs, { room_name: currentRoom.name, action_on_room: error.message }]);
+      setLogs((prevLogs) => [...prevLogs, {date:date, message:`Action on room ${currentRoom.name} -> ${error.message}`}]);
     }
   };
 
@@ -63,11 +68,11 @@ function SHC_SimulatorCommands({ currentProfile, currentRoom, setRooms, setCurre
             </div>
             <div className="flex items-center mb-4">
               <p className="ms-1 me-3 text-md font-semibold text-gray-900 ">Window State:</p>
-              <input value="changeWindow" onChange={handleStateChange} checked={currentRoom.window_state} id="lightOn" type="radio" name="windowState" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 " />
+              <input value="changeWindow" onChange={handleStateChange} checked={currentRoom.window_state} id="windowOpen" type="radio" name="windowState" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 " />
               <label htmlFor="default-radio-1" className="ms-1 me-2 text-sm font-medium text-gray-900 ">
                 Open
               </label>
-              <input value="changeWindow" onChange={handleStateChange} checked={!currentRoom.window_state} id="lightOff" type="radio" name="windowState" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 " />
+              <input value="changeWindow" onChange={handleStateChange} checked={!currentRoom.window_state} id="windowClosed" type="radio" name="windowState" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 " />
               <label htmlFor="default-radio-2" className="ms-1 text-sm font-medium text-gray-900 ">
                 Close
               </label>
@@ -97,4 +102,7 @@ SHC_SimulatorCommands.propTypes = {
   setRooms: PropTypes.func,
   setCurrentRoom: PropTypes.func,
   setLogs: PropTypes.func,
+  setZones: PropTypes.func,
+  date: PropTypes.string,
+  awayMode: PropTypes.bool,
 };

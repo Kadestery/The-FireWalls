@@ -42,6 +42,7 @@ class House(Base):
     
     user = relationship("User", back_populates="house")
     rooms = relationship("Room", back_populates="house")
+    zones = relationship("Zone", back_populates="house")
     
     
 class Room(Base):
@@ -49,6 +50,7 @@ class Room(Base):
     
     room_id = Column(Integer, primary_key=True)
     house_id = Column(Integer, ForeignKey('houses.house_id'))
+    zone_id = Column(Integer, ForeignKey('zones.zone_id')) 
     name = Column(String)
     room_type = Column(String)
     window_state = Column(Boolean, default=False)
@@ -57,9 +59,23 @@ class Room(Base):
     
     house = relationship("House", back_populates="rooms")
     profiles = relationship("Profile", back_populates="room")
+    zone = relationship("Zone", back_populates="rooms")  # Establishing the relationship with Zone
     
     # Adjusted to enforce uniqueness of room names within each house
     __table_args__ = (UniqueConstraint('house_id', 'name', name='_house_room_name_uc'),)
+    
+    
+class Zone(Base):
+    __tablename__ = "zones"
+
+    zone_id = Column(Integer, primary_key=True)
+    house_id = Column(Integer, ForeignKey('houses.house_id'))  # Foreign key to reference House
+    temperature = Column(Integer)
+    
+    # Relationship to Rooms
+    rooms = relationship("Room", back_populates="zone")
+    house = relationship("House", back_populates="zones")
+
     
     
 

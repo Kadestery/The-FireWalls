@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useRef, useEffect } from 'react';
 
-function Console({ logs }) {
+function Console({ logs}) {
 
     const endRef = useRef(null);
     useEffect(() => {
@@ -14,7 +14,7 @@ function Console({ logs }) {
         {logs.length > 0 ? (
           logs.map((log, index) => (
             <p key={index} className="whitespace-nowrap inline-block pr-4">
-              {`${log.room_name}: ${log.action_on_room}`}
+              {`${log.date}: ${log.message}`}
             </p>
           ))
         ) : (

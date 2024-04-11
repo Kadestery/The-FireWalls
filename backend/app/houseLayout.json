@@ -26,5 +26,9 @@
     "window": false,
     "light": false,
     "door": false
+  },
+  {
+    "name": "Outside",
+    "room_type": "Outside"
   }
 ]

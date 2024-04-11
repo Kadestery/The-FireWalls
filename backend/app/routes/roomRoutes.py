@@ -1,22 +1,19 @@
 from fastapi import APIRouter, Depends, HTTPException
 from ..DB.database import get_db
 from sqlalchemy.orm import Session
-from ..DB.crud import get_rooms_in_house, get_profile_by_username, get_room_by_id
+from ..DB.crud import get_rooms_in_house, get_profile_by_username, get_room_by_id, get_zones
 from ..DB import schemas
 from ..designPatterns.StrategyPattern.strategy_methods import get_permissions
 from ..designPatterns.CommandPattern.command_methods import execute_all_command_methods
 
 router = APIRouter(prefix="/room", tags=["room"])
 
-from typing import List
-
-@router.get("/getrooms", response_model=List[schemas.RoomState])
+@router.get("/getrooms", response_model=list[schemas.RoomState])
 async def get_rooms(house_id: int, db: Session = Depends(get_db)):
     rooms = get_rooms_in_house(db, house_id)
     # Filter the room objects to only include the desired fields
-    filtered_rooms = [ { "room_id": room.room_id, "profiles_in_room": [ {"profile_id": profile.profile_id, "profile_username": profile.profile_username, "profile_type": profile.profile_type} for profile in room.profiles ], "name": room.name, "room_type": room.room_type, "window_state": room.window_state, "door_state": room.door_state, "light_state": room.light_state } for room in rooms ]
+    filtered_rooms = schemas.filter_rooms(rooms)
     return filtered_rooms
-
 
 
 @router.put("/room-action")
@@ -38,7 +35,9 @@ async def perform_room_action(profile_commands: schemas.RoomAction, house_id: in
     # Execute the command on the room object
     commang_log = execute_all_command_methods(db, profile_commands.room_id, room.room_type, profile_commands.action_type)
     print(commang_log)
-    filtered_rooms = [ { "room_id": room.room_id, "profiles_in_room": [ {"profile_id": profile.profile_id, "profile_username": profile.profile_username, "profile_type": profile.profile_type} for profile in room.profiles ], "name": room.name, "room_type": room.room_type, "window_state": room.window_state, "door_state": room.door_state, "light_state": room.light_state } for room in rooms ]
-    return {"command_log": commang_log, "rooms": filtered_rooms}
+    filtered_rooms = schemas.filter_rooms(rooms)
+    zones = get_zones(db, house_id)
+    filtered_zones = schemas.filter_zones(zones)
+    return {"command_log": commang_log, "rooms": filtered_rooms, "zones": filtered_zones}
     
     

@@ -7,18 +7,21 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 function Home() {
-  const profilesAndRooms = useLoaderData();
-  const [profiles, setProfiles] = useState(profilesAndRooms.profiles);
-  const [rooms, setRooms] = useState(profilesAndRooms.rooms);
+  const profilesRoomsAndZones = useLoaderData();
+  const [profiles, setProfiles] = useState(profilesRoomsAndZones.profiles);
+  const [rooms, setRooms] = useState(profilesRoomsAndZones.rooms);
+  const [zones, setZones] = useState(profilesRoomsAndZones.zones);
   const [currentProfile, setCurrentProfile] = useState({
     profile_username: "TBD",
     profile_type: "TBD",
   });
   const [currentRoom, setCurrentRoom] = useState();
   const [simulationRunning, setSimulationRunning] = useState(false);
+  const [awayMode , setAwayMode] = useState(false)
   const [temperature, setTemperature] = useState("");
   const [temperatureData, setTemperatureData] = useState([]);
   const [date, setDate] = useState("");
+
 
   return (
     <>
@@ -40,6 +43,7 @@ function Home() {
                 setSimulationRunning(!simulationRunning);
                 setCurrentProfile({ profile_username: "TBD", profile_type: "TBD" });
                 setCurrentRoom();
+                setAwayMode(false)
               }
             }}
           />
@@ -53,14 +57,14 @@ function Home() {
 
       <div className="flex justify-center mt-4">
         <div className="flex flex-row justify-center items-stretch border-2 border-blue-500 rounded-md">
-          <div className="pe-4 ps-8 my-auto ">{simulationRunning ? <SimulationInfo rooms={rooms} setRooms={setRooms} setCurrentRoom={setCurrentRoom} profiles={profiles} setProfiles={setProfiles} currentProfile={currentProfile} setCurrentProfile={setCurrentProfile} date={date} setDate={setDate} temperature={temperature} setTemperature={setTemperature} temperatureData={temperatureData} /> : <SetupSimulationContext setTemperature={setTemperature} setDate={setDate} setTemperatureData={setTemperatureData} />}</div>
+          <div className="pe-4 ps-8 my-auto ">{simulationRunning ? <SimulationInfo rooms={rooms} setRooms={setRooms} setCurrentRoom={setCurrentRoom} profiles={profiles} setProfiles={setProfiles} currentProfile={currentProfile} setCurrentProfile={setCurrentProfile} date={date} setDate={setDate} temperature={temperature} setTemperature={setTemperature} temperatureData={temperatureData} setZones={setZones} /> : <SetupSimulationContext setTemperature={setTemperature} setDate={setDate} setTemperatureData={setTemperatureData} />}</div>
           {simulationRunning && (
             <div className="py-16">
-              <SimulatorCommands currentRoom={currentRoom} currentProfile={currentProfile} setRooms={setRooms} setCurrentRoom={setCurrentRoom} />
+              <SimulatorCommands currentRoom={currentRoom} currentProfile={currentProfile} setRooms={setRooms} setCurrentRoom={setCurrentRoom} setZones={setZones} zones={zones} date={date} awayMode={awayMode} setAwayMode={setAwayMode} />
             </div>
           )}
           <div className="pe-8 ps-4 py-2 ">
-            <HomeLayout rooms={rooms} />
+            <HomeLayout zones={zones} />
           </div>
         </div>
       </div>

@@ -6,7 +6,7 @@ import Console from "./simulatorCommands/Console";
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-function SimulatorCommands({ currentProfile, currentRoom, setRooms, setCurrentRoom }) {
+function SimulatorCommands({ currentProfile, currentRoom, setRooms, setCurrentRoom, zones, setZones, date, awayMode, setAwayMode}) {
   const [logs, setLogs] = useState([]); //display logs when simulation is running for open close light etc
   const [simulatorCommand, setSimulatorCommand] = useState("SHC"); //command to be executed
   return (
@@ -24,12 +24,12 @@ function SimulatorCommands({ currentProfile, currentRoom, setRooms, setCurrentRo
               ))}
             </ul>
           </div>
-          {simulatorCommand === "SHC" && <SHC_SimulatorCommands currentProfile={currentProfile} currentRoom={currentRoom} setRooms={setRooms} setCurrentRoom={setCurrentRoom} setLogs={setLogs} />}
-          {simulatorCommand === "SHP" && <SHP_SimulatorCommands currentProfile={currentProfile} currentRoom={currentRoom} setRooms={setRooms} setCurrentRoom={setCurrentRoom} setLogs={setLogs} />}
+          {simulatorCommand === "SHC" && <SHC_SimulatorCommands currentProfile={currentProfile} currentRoom={currentRoom} setRooms={setRooms} setCurrentRoom={setCurrentRoom} setLogs={setLogs} setZones={setZones} date={date} awayMode={awayMode} />}
+          {simulatorCommand === "SHP" && <SHP_SimulatorCommands awayMode = {awayMode} setAwayMode={setAwayMode} setRooms={setRooms} setZones={setZones} setLogs={setLogs} date={date} />}
           {simulatorCommand === "SHS" && <SHS_SimulatorCommands currentProfile={currentProfile} currentRoom={currentRoom} setRooms={setRooms} setCurrentRoom={setCurrentRoom} setLogs={setLogs} />}
-          {simulatorCommand === "SHH" && <SHH_SimalatorCommands currentProfile={currentProfile} currentRoom={currentRoom} setRooms={setRooms} setCurrentRoom={setCurrentRoom} setLogs={setLogs} />}
+          {simulatorCommand === "SHH" && <SHH_SimalatorCommands setRooms={setRooms} setLogs={setLogs} zones={zones} setZones={setZones} date={date} awayMode={awayMode} setAwayMode={setAwayMode}  />}
         </div>
-        <Console logs={logs} />
+        <Console logs={logs} date={date} />
       </div>
     </>
   );
@@ -53,4 +53,30 @@ SimulatorCommands.propTypes = {
   }),
   setRooms: PropTypes.func,
   setCurrentRoom: PropTypes.func,
+  zones: PropTypes.arrayOf(
+    PropTypes.shape({
+      zone_id: PropTypes.number.isRequired,
+      rooms: PropTypes.arrayOf(
+        PropTypes.shape({
+          room_id: PropTypes.number.isRequired,
+          name: PropTypes.string.isRequired,
+          room_type: PropTypes.string.isRequired,
+          window_state: PropTypes.bool.isRequired,
+          door_state: PropTypes.bool.isRequired,
+          light_state: PropTypes.bool.isRequired,
+          profiles_in_room: PropTypes.arrayOf(
+            PropTypes.shape({
+              profile_username: PropTypes.string.isRequired,
+              profile_type: PropTypes.string.isRequired,
+              profile_id: PropTypes.number.isRequired,
+            })
+          ),
+        })
+      ).isRequired,
+    })
+  ).isRequired,
+  setZones: PropTypes.func,
+  date: PropTypes.string,
+  awayMode: PropTypes.bool,
+  setAwayMode: PropTypes.func,
 };

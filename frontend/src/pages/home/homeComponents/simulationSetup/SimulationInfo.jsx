@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { ProfilePicture } from "../../../../generalComponents/ProfileImages";
 import { useEffect, useState } from "react";
 
-function SimulationInfo({ rooms, setRooms, setCurrentRoom, profiles, setProfiles, currentProfile, setCurrentProfile, date, setDate, temperature, setTemperature, temperatureData }) {
+function SimulationInfo({ rooms, setRooms, setCurrentRoom, profiles, setProfiles, currentProfile, setCurrentProfile, date, setDate, temperature, setTemperature, temperatureData, setZones }) {
   const [lastIndex, setLastIndex] = useState(0);
   useEffect(() => {
     const interval = setInterval(() => {
@@ -64,6 +64,7 @@ function SimulationInfo({ rooms, setRooms, setCurrentRoom, profiles, setProfiles
       console.log(data);
 
       setProfiles(data.user_profiles);
+      setZones(data.zones);
       setRooms(data.rooms);
       setCurrentProfile({ profile_username: profile.profile_username, profile_type: profile.profile_type, profile_room: room.name });
       setCurrentRoom(room);
@@ -174,4 +175,5 @@ SimulationInfo.propTypes = {
       temperature: PropTypes.string.isRequired,
     })
   ),
+  setZones: PropTypes.func,
 };

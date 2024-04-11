@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends
 from ..DB.schemas import UserSignup, UserLogin
-from ..DB.crud import create_user, get_user_by_email, create_house, create_room, get_house
+from ..DB.crud import create_user, get_user_by_email, create_house, create_room, get_house, create_zone, add_room_to_zone
 from sqlalchemy.orm import Session
 from ..DB.database import get_db
 import bcrypt
@@ -46,11 +46,17 @@ async def read_users(userSignup: UserSignup, db: Session = Depends(get_db)):
     new_house = create_house(db=db, user_id=new_user.user_id)
     # Load the default house layout
     default_house_layout = load_default_house_layout()
-
+    
+    default_zone = create_zone(db=db, house_id=new_house.house_id, temperature=20)
     # Create rooms for the house
     for room_info in default_house_layout:
-        create_room(db=db, house_id=new_house.house_id, room_info=room_info)
-    
+        new_room = create_room(db=db, house_id=new_house.house_id, room_info=room_info)
+        if new_room.room_type == "LivingRoom" or new_room.room_type == "Kitchen":
+            add_room_to_zone(db=db, room_id=new_room.room_id, zone_id=default_zone.zone_id)
+        else:
+            new_zone = create_zone(db=db, house_id=new_house.house_id, temperature=20)
+            add_room_to_zone(db=db, room_id=new_room.room_id, zone_id=new_zone.zone_id)
+             
     return {"username": userSignup.username, "email": userSignup.email, "house_id": new_house.house_id}
 
 

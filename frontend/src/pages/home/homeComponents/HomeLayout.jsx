@@ -39,40 +39,67 @@ const LightStateIcon = ({ isOpen }) => {
   return isOpen ? <HiOutlineLightBulb {...iconProps} title="On" /> : <FaLightbulb {...iconProps} title="Off" />;
 };
 
-const HomeLayout = ({ rooms }) => {
+const ProfilesDisplay = ({ profiles }) => {
+  return (
+    <div className="p-3 bg-sky-300 rounded-full flex flex-row justify-center items-center mb-2">
+      {profiles.map((profile, index) => (
+        <ProfileIcon key={index} profile_type={profile.profile_type} title={profile.profile_username} className="w-8 h-8" />
+      ))}
+    </div>
+  );
+};
+
+const HomeLayout = ({ zones }) => {
+  zones.forEach((zone) => {
+    zone.rooms.sort((a, b) => a.room_id - b.room_id);
+  });
+
+  const outsideRoom = zones.flatMap((zone) => zone.rooms).find((room) => room.room_type === "Outside");
+
+  const indoorZones = zones.filter((zone) => !zone.rooms.some((room) => room.room_type === "Outside"));
+  const zoneBackgroundColors = ["bg-blue-100", "bg-green-100", "bg-yellow-100", "bg-pink-100", "bg-purple-100"];
+
   return (
     <>
-      <div className="w-full h-0 border-l-[200px] md:border-l-[150px] border-l-transparent border-b-[100px] border-b-blue-300  border-r-[200px] md:border-r-[150px]  border-r-transparent" />
-      <div className="grid grid-cols-2 w-[400px] md:w-[300px] ">
-        {rooms.map((room, index) => (
-          <div key={index} className="border-2 m-1 border-gray-700 flex flex-col items-center justify-center p-4">
-            <div className=" font-medium text-xl mb-2 text-center">{room.name}</div>
+      <div className="bg-lime-200 py-4 px-8">
+        <div className="w-full h-0  md:border-l-[250px] border-l-transparent border-b-[100px] border-b-blue-300 border-r-[250px] border-r-transparent" />
+        <div className="grid grid-cols-3 w-[500px] bg-white">
+          {indoorZones.map((zone, zoneIndex) => (
+            // Use the modulo operator to cycle through the zoneBackgroundColors array
+            <div key={zoneIndex} className={`border-orange-400 border-2 p-2 m-2 ${zoneBackgroundColors[zoneIndex % zoneBackgroundColors.length]}`}>
+              <p className="text-center"><span className="font-medium">Zone Temp:</span> {zone.temperature}°C</p>
+              {zone.rooms.map((room) => (
+                <div key={room.name} className="border-2 m-1 border-gray-700 flex flex-col items-center justify-center p-4">
+                  <p className="font-medium text-xl mb-2 text-center">{room.name}</p>
 
-            <div className="relative inline-block group mb-3">
-              <RoomTypeIcon type={room.room_type} />
-              <span className=" group-hover:visible invisible absolute text-xs top-6 left-1/2 -translate-x-1/2 border-violet-700 border-2">{room.room_type}</span>
-            </div>
-            {room.profiles_in_room.length > 0  && (
-              <div className="p-3 bg-green-300 rounded-full flex flex-row justify-center items-center mb-2">
-                {room.profiles_in_room.map((profile, index) => (
-                  <ProfileIcon key={index} profile_type={profile.profile_type} title={profile.profile_username} className="w-8 h-8" />
-                ))}
-              </div>
-            )}
+                  <div className="relative inline-block group mb-3">
+                    <RoomTypeIcon type={room.room_type} />
+                    <span className="group-hover:visible invisible absolute text-xs top-6 left-1/2 -translate-x-1/2 border-violet-700 border-2">{room.room_type}</span>
+                  </div>
+                  {room.profiles_in_room.length > 0 && <ProfilesDisplay profiles={room.profiles_in_room} />}
 
-            <div className="text-sm text-center">
-              <p className="mb-2">
-                Window: <WindowStateIcon isOpen={room.window_state} />
-              </p>
-              <p className="mb-2">
-                Door: <DoorStateIcon isOpen={room.door_state} />
-              </p>
-              <p>
-                Light: <LightStateIcon isOpen={room.light_state} />
-              </p>
+                  <div className="text-sm text-center">
+                    <p className="mb-2">
+                      Window: <WindowStateIcon isOpen={room.window_state} />
+                    </p>
+                    <p className="mb-2">
+                      Door: <DoorStateIcon isOpen={room.door_state} />
+                    </p>
+                    <p>
+                      Light: <LightStateIcon isOpen={room.light_state} />
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
+          ))}
+        </div>
+        {outsideRoom && (
+          <div>
+            <p className="text-center mt-4 font-medium text-xl underline">{outsideRoom.room_type}</p>
+            <div className="flex justify-center">{outsideRoom.profiles_in_room.length > 0 && <ProfilesDisplay profiles={outsideRoom.profiles_in_room} />}</div>
           </div>
-        ))}
+        )}
       </div>
     </>
   );
@@ -81,21 +108,27 @@ const HomeLayout = ({ rooms }) => {
 export default HomeLayout;
 
 HomeLayout.propTypes = {
-  rooms: PropTypes.arrayOf(
+  zones: PropTypes.arrayOf(
     PropTypes.shape({
-      room_id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      room_type: PropTypes.string.isRequired,
-      window_state: PropTypes.bool.isRequired,
-      door_state: PropTypes.bool.isRequired,
-      light_state: PropTypes.bool.isRequired,
-      profiles_in_room: PropTypes.arrayOf(
+      zone_id: PropTypes.number.isRequired,
+      temperature: PropTypes.number.isRequired,
+      rooms: PropTypes.arrayOf(
         PropTypes.shape({
-          profile_username: PropTypes.string.isRequired,
-          profile_type: PropTypes.string.isRequired,
-          profile_id: PropTypes.number.isRequired,
+          room_id: PropTypes.number.isRequired,
+          name: PropTypes.string.isRequired,
+          room_type: PropTypes.string.isRequired,
+          window_state: PropTypes.bool.isRequired,
+          door_state: PropTypes.bool.isRequired,
+          light_state: PropTypes.bool.isRequired,
+          profiles_in_room: PropTypes.arrayOf(
+            PropTypes.shape({
+              profile_username: PropTypes.string.isRequired,
+              profile_type: PropTypes.string.isRequired,
+              profile_id: PropTypes.number.isRequired,
+            })
+          ),
         })
-      ),
+      ).isRequired,
     })
   ).isRequired,
 };
@@ -114,4 +147,14 @@ DoorStateIcon.propTypes = {
 
 LightStateIcon.propTypes = {
   isOpen: PropTypes.bool.isRequired,
+};
+
+ProfilesDisplay.propTypes = {
+  profiles: PropTypes.arrayOf(
+    PropTypes.shape({
+      profile_username: PropTypes.string.isRequired,
+      profile_type: PropTypes.string.isRequired,
+      profile_id: PropTypes.number.isRequired,
+    })
+  ).isRequired,
 };
