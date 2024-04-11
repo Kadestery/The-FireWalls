@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from ..DB.database import get_db
 from sqlalchemy.orm import Session
-from ..DB.crud import get_rooms_in_house, get_profile_by_username, get_room_by_id, get_zones
+from ..DB.crud import get_rooms_in_house, get_profile_by_username, get_room_by_id, get_zones, change_motion_detector_state
 from ..DB import schemas
 from ..designPatterns.StrategyPattern.strategy_methods import get_permissions
 from ..designPatterns.CommandPattern.command_methods import execute_all_command_methods
@@ -39,5 +39,19 @@ async def perform_room_action(profile_commands: schemas.RoomAction, house_id: in
     zones = get_zones(db, house_id)
     filtered_zones = schemas.filter_zones(zones)
     return {"command_log": commang_log, "rooms": filtered_rooms, "zones": filtered_zones}
+
+
+@router.put("/changemotiondetector")
+async def change_motion_detector_status(room_info: schemas.AddMotionDetector, house_id: int, db: Session = Depends(get_db)):
+    print("Changing motion detector status")
+    change_motion_detector_state(db, room_info.room_id)
+    rooms = get_rooms_in_house(db, house_id)
+    filtered_rooms = schemas.filter_rooms(rooms)
+    zones = get_zones(db, house_id)
+    filtered_zones = schemas.filter_zones(zones)
+    return {"rooms": filtered_rooms, "zones": filtered_zones}
+        
+        
+        
     
     

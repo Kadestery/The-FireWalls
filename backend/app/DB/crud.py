@@ -152,4 +152,10 @@ def change_zone_of_room(db: Session, room_id: int, zone_id: int):
         delete_zone(db, zone_id)
     return get_zones(db, room.house_id)
 
+def change_motion_detector_state(db: Session, room_id: int):
+    room = db.query(models.Room).filter(models.Room.room_id == room_id).first()
+    room.motion_detector = not room.motion_detector
+    db.commit()
+    return
+
 

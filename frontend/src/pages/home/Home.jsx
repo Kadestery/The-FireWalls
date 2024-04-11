@@ -21,6 +21,7 @@ function Home() {
   const [temperature, setTemperature] = useState("");
   const [temperatureData, setTemperatureData] = useState([]);
   const [date, setDate] = useState("");
+  const [timerToCallCops, setTimerToCallCops] = useState(2000);
 
 
   return (
@@ -60,11 +61,11 @@ function Home() {
           <div className="pe-4 ps-8 my-auto ">{simulationRunning ? <SimulationInfo rooms={rooms} setRooms={setRooms} setCurrentRoom={setCurrentRoom} profiles={profiles} setProfiles={setProfiles} currentProfile={currentProfile} setCurrentProfile={setCurrentProfile} date={date} setDate={setDate} temperature={temperature} setTemperature={setTemperature} temperatureData={temperatureData} setZones={setZones} /> : <SetupSimulationContext setTemperature={setTemperature} setDate={setDate} setTemperatureData={setTemperatureData} />}</div>
           {simulationRunning && (
             <div className="py-16">
-              <SimulatorCommands currentRoom={currentRoom} currentProfile={currentProfile} setRooms={setRooms} setCurrentRoom={setCurrentRoom} setZones={setZones} zones={zones} date={date} awayMode={awayMode} setAwayMode={setAwayMode} />
+              <SimulatorCommands timerToCallCops={timerToCallCops} setTimerToCallCops={setTimerToCallCops} currentRoom={currentRoom} setCurrentRoom={setCurrentRoom} currentProfile={currentProfile} rooms={rooms} setRooms={setRooms} setZones={setZones} zones={zones} date={date} awayMode={awayMode} setAwayMode={setAwayMode} />
             </div>
           )}
           <div className="pe-8 ps-4 py-2 ">
-            <HomeLayout zones={zones} />
+            <HomeLayout zones={zones} timerToCallCops={timerToCallCops} />
           </div>
         </div>
       </div>

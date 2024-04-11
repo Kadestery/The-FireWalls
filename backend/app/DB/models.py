@@ -56,6 +56,7 @@ class Room(Base):
     window_state = Column(Boolean, default=False)
     door_state = Column(Boolean, default=False)
     light_state = Column(Boolean, default=False)
+    motion_detector = Column(Boolean, default=False)
     
     house = relationship("House", back_populates="rooms")
     profiles = relationship("Profile", back_populates="room")

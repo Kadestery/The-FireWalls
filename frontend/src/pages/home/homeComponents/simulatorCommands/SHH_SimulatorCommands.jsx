@@ -111,6 +111,7 @@ SHH_SimulatorCommands.propTypes = {
           window_state: PropTypes.bool.isRequired,
           door_state: PropTypes.bool.isRequired,
           light_state: PropTypes.bool.isRequired,
+          motion_detector: PropTypes.bool.isRequired,
           profiles_in_room: PropTypes.arrayOf(
             PropTypes.shape({
               profile_username: PropTypes.string.isRequired,

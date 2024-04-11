@@ -65,10 +65,13 @@ class ChangeZoneOfRoom(BaseModel):
     new_zone_id: int
     previous_zone_id: int
     
+class AddMotionDetector(BaseModel):
+    room_id: int
+    
 def filter_zones(zones):
-    return  [ { "zone_id": zone.zone_id, "house_id": zone.house_id, "temperature": zone.temperature, "rooms": [ { "room_id": room.room_id, "name": room.name, "room_type": room.room_type, "window_state": room.window_state, "door_state": room.door_state, "light_state": room.light_state, "profiles_in_room": [ { "profile_id": profile.profile_id, "profile_username": profile.profile_username, "profile_type": profile.profile_type } for profile in room.profiles ] } for room in zone.rooms ] } for zone in zones ]
+    return  [ { "zone_id": zone.zone_id, "house_id": zone.house_id, "temperature": zone.temperature, "rooms": [ { "room_id": room.room_id, "name": room.name, "room_type": room.room_type, "window_state": room.window_state, "door_state": room.door_state, "light_state": room.light_state, "motion_detector":room.motion_detector, "profiles_in_room": [ { "profile_id": profile.profile_id, "profile_username": profile.profile_username, "profile_type": profile.profile_type } for profile in room.profiles ] } for room in zone.rooms ] } for zone in zones ]
 
 def filter_rooms(rooms):
-    return [ { "room_id": room.room_id, "zone_id": room.zone_id, "profiles_in_room": [ {"profile_id": profile.profile_id, "profile_username": profile.profile_username, "profile_type": profile.profile_type} for profile in room.profiles ], "name": room.name, "room_type": room.room_type, "window_state": room.window_state, "door_state": room.door_state, "light_state": room.light_state } for room in rooms ]
+    return [ { "room_id": room.room_id, "zone_id": room.zone_id, "profiles_in_room": [ {"profile_id": profile.profile_id, "profile_username": profile.profile_username, "profile_type": profile.profile_type} for profile in room.profiles ], "name": room.name, "room_type": room.room_type, "window_state": room.window_state, "door_state": room.door_state, "light_state": room.light_state, "motion_detector":room.motion_detector, } for room in rooms ]
  
     

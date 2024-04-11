@@ -161,6 +161,7 @@ SimulationInfo.propTypes = {
       window_state: PropTypes.bool.isRequired,
       door_state: PropTypes.bool.isRequired,
       light_state: PropTypes.bool.isRequired,
+      motion_detector: PropTypes.bool.isRequired,
     })
   ),
   setRooms: PropTypes.func.isRequired,

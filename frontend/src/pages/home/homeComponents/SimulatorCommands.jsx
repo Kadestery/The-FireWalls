@@ -6,7 +6,7 @@ import Console from "./simulatorCommands/Console";
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-function SimulatorCommands({ currentProfile, currentRoom, setRooms, setCurrentRoom, zones, setZones, date, awayMode, setAwayMode}) {
+function SimulatorCommands({ currentProfile, setCurrentRoom,  currentRoom, setRooms, rooms, zones, setZones, date, awayMode, setAwayMode, timerToCallCops , setTimerToCallCops }) {
   const [logs, setLogs] = useState([]); //display logs when simulation is running for open close light etc
   const [simulatorCommand, setSimulatorCommand] = useState("SHC"); //command to be executed
   return (
@@ -25,7 +25,7 @@ function SimulatorCommands({ currentProfile, currentRoom, setRooms, setCurrentRo
             </ul>
           </div>
           {simulatorCommand === "SHC" && <SHC_SimulatorCommands currentProfile={currentProfile} currentRoom={currentRoom} setRooms={setRooms} setCurrentRoom={setCurrentRoom} setLogs={setLogs} setZones={setZones} date={date} awayMode={awayMode} />}
-          {simulatorCommand === "SHP" && <SHP_SimulatorCommands awayMode = {awayMode} setAwayMode={setAwayMode} setRooms={setRooms} setZones={setZones} setLogs={setLogs} date={date} />}
+          {simulatorCommand === "SHP" && <SHP_SimulatorCommands awayMode = {awayMode} setAwayMode={setAwayMode} rooms={rooms} setRooms={setRooms} setZones={setZones} setLogs={setLogs} date={date} timerToCallCops={timerToCallCops} setTimerToCallCops={setTimerToCallCops}  />}
           {simulatorCommand === "SHS" && <SHS_SimulatorCommands currentProfile={currentProfile} currentRoom={currentRoom} setRooms={setRooms} setCurrentRoom={setCurrentRoom} setLogs={setLogs} />}
           {simulatorCommand === "SHH" && <SHH_SimalatorCommands setRooms={setRooms} setLogs={setLogs} zones={zones} setZones={setZones} date={date} awayMode={awayMode} setAwayMode={setAwayMode}  />}
         </div>
@@ -50,6 +50,7 @@ SimulatorCommands.propTypes = {
     window_state: PropTypes.bool,
     door_state: PropTypes.bool,
     light_state: PropTypes.bool,
+    motion_detector: PropTypes.bool,
   }),
   setRooms: PropTypes.func,
   setCurrentRoom: PropTypes.func,
@@ -64,6 +65,7 @@ SimulatorCommands.propTypes = {
           window_state: PropTypes.bool.isRequired,
           door_state: PropTypes.bool.isRequired,
           light_state: PropTypes.bool.isRequired,
+          motion_detector: PropTypes.bool.isRequired,
           profiles_in_room: PropTypes.arrayOf(
             PropTypes.shape({
               profile_username: PropTypes.string.isRequired,
@@ -79,4 +81,24 @@ SimulatorCommands.propTypes = {
   date: PropTypes.string,
   awayMode: PropTypes.bool,
   setAwayMode: PropTypes.func,
+  rooms: PropTypes.arrayOf(
+    PropTypes.shape({
+      room_id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      room_type: PropTypes.string.isRequired,
+      window_state: PropTypes.bool.isRequired,
+      door_state: PropTypes.bool.isRequired,
+      light_state: PropTypes.bool.isRequired,
+      motion_detector: PropTypes.bool.isRequired,
+      profiles_in_room: PropTypes.arrayOf(
+        PropTypes.shape({
+          profile_username: PropTypes.string.isRequired,
+          profile_type: PropTypes.string.isRequired,
+          profile_id: PropTypes.number.isRequired,
+        })
+      ),
+    })
+  ).isRequired,
+  timerToCallCops: PropTypes.number,
+  setTimerToCallCops: PropTypes.func,
 };
