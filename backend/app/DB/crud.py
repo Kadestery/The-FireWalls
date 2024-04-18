@@ -2,7 +2,6 @@ from sqlalchemy.orm import Session
 from . import models
 from . import schemas
 
-
 ## Auth route CRUD operations
 def create_user(db: Session, user_info: schemas.UserSignup) -> models.User:
     db_user = models.User(username=user_info.username, email=user_info.email, password_hash=user_info.password)
@@ -15,10 +14,8 @@ def get_user_by_email(db: Session, email: str):
     return db.query(models.User).filter(models.User.email == email).first()
 
 
-#
-#
-#
-##profileRoutes CRUD operations
+
+#profileRoutes CRUD operations
 
 def create_profile(db: Session, profile_info: schemas.ProfileCreate):
     user = db.query(models.User).filter(models.User.email == profile_info.email).first()
