@@ -45,6 +45,8 @@ class House(Base):
     zones = relationship("Zone", back_populates="house")
     
     
+
+
 class Room(Base):
     __tablename__ = "rooms"
     
@@ -66,6 +68,8 @@ class Room(Base):
     __table_args__ = (UniqueConstraint('house_id', 'name', name='_house_room_name_uc'),)
     
     
+
+
 class Zone(Base):
     __tablename__ = "zones"
 
