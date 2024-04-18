@@ -1,5 +1,6 @@
 import { redirect } from "react-router-dom";
 
+
 export async function createProfileAction({ request }) {
   const data = await request.formData();
   console.log(localStorage.getItem("email"), data.get("username"), data.get("profileType"));
