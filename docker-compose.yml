@@ -1,4 +1,4 @@
-# Use postgres/example user/password credentials
+# Use Postgres/example user/password credentials
 version: '3.9'
 
 services:
@@ -7,9 +7,9 @@ services:
     image: postgres:15
     ports:
       - 5433:5432
-    # or set shared memory limit when deploy via swarm stack
+    # or set shared memory limit when deploying via swarm stack
     #volumes:
-    #  postgres_data:/var/lib/postgresql/data  add database info which is in /var/lib/postgresql/data in the container to the volume called postgres_data
+    #  postgres_data:/var/lib/postgresql/data  add database info which is in /var/lib/PostgreSQL/data in the container to the volume called postgres_data
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
