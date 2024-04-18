@@ -40,7 +40,7 @@ class Bathroom(RoomInvoker):
 
     def setCommand(self, command):
         self.command = command
-        
+         
     def executeCommand(self, db: Session, room_id: int):
         if self.command:
             return self.command.execute(db, room_id)
