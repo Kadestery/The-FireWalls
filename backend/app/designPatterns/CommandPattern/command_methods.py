@@ -23,7 +23,7 @@ def get_room_type_class(room_type: str) -> RoomInvoker:
 from fastapi import HTTPException
 
 def get_command(command_type: ActionType) -> Command:
-    # Initialize command as None to ensure it's defined even if the action types don't match
+    # Initialize the command as None to ensure it's defined even if the action types don't match
     command = None
 
     # Instantiate the correct command based on the action type
