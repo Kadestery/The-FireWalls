@@ -8,7 +8,7 @@ from ..DB.schemas import ProfileType
 class User(Base):
     __tablename__ = "users"
 
-    user_id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, primary_key=True) 
     username = Column(String)
     email = Column(String, unique=True)
     password_hash = Column(String)
