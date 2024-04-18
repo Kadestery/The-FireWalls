@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-from .permission_strategies import Context , ParentPermissionStrategy, ChildPermissionStrategy, GuestPermissionStrategy, StrangerPermissionStrategy
+from .permission_strategies import Context, ParentPermissionStrategy, ChildPermissionStrategy, GuestPermissionStrategy, StrangerPermissionStrategy
 from app.DB.schemas import ActionType
 
 def get_permissions(profile_type: str, action: ActionType):
