@@ -15,7 +15,7 @@ class Light:
         else:
             return "Light turned on"
 
-class Window:
+class Window: 
     @staticmethod
     def changeWindow(db: Session, room_id: int):
         room = get_room_by_id(db, room_id)
