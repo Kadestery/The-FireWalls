@@ -29,13 +29,13 @@ class ParentPermissionStrategy(PermissionStrategy):
 
 class ChildPermissionStrategy(PermissionStrategy):
     def has_permission(self, action: ActionType) -> bool:
-        # Assume children can change light and window but not door for simplicity
+        # Assume children can change lights and windows but not doors for simplicity
         return action in [ActionType.CHANGE_LIGHT, ActionType.CHANGE_WINDOW]
 
 
 class GuestPermissionStrategy(PermissionStrategy):
     def has_permission(self, action: ActionType) -> bool:
-        # Assume guests can only change light state for simplicity
+        # Assume guests can only change the light state for simplicity
         return action == ActionType.CHANGE_LIGHT
 
 
