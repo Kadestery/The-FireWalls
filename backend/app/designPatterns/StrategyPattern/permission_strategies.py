@@ -5,9 +5,9 @@ from app.DB.schemas import ActionType
 
 class PermissionStrategy(ABC):
     """
-    Defines an interface for permission strategies.
-    Concrete implementations should define how permissions
-    are handled for different actions.
+    Defines an interface for permission strategies. 
+    Concrete implementations must specify how permissions 
+    are managed for various actions.
     """
     @abstractmethod
     def has_permission(self, action: ActionType) -> bool:
@@ -46,7 +46,7 @@ class StrangerPermissionStrategy(PermissionStrategy):
 
 class Context:
     """
-    Context class that holds a reference to the current permission strategy.
+    Context class holding a reference to the current permission strategy.
     """
     def __init__(self):
         self.permission_strategy = None
