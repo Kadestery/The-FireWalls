@@ -35,5 +35,5 @@ function ProfilePicture({ profile_type }){
     </div>
   );
 }
-
+ 
 export { ProfileIcon, ProfilePicture };
