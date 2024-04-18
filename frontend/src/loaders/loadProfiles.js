@@ -1,7 +1,7 @@
 export async function loadProfiles() {
   const email = localStorage.getItem("email");
   const house_id = localStorage.getItem("house_id");
-
+ 
   try {
     // Start both fetch operations in parallel
     const profilesResponse = fetch(`api/profile/getprofiles?email=${encodeURIComponent(email)}`);
