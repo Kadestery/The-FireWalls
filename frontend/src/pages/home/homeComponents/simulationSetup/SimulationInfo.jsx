@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 function SimulationInfo({ rooms, setRooms, setCurrentRoom, profiles, setProfiles, currentProfile, setCurrentProfile, date, setDate, temperature, setTemperature, temperatureData }) {
   const [lastIndex, setLastIndex] = useState(0);
+  //Set time
   useEffect(() => {
     const interval = setInterval(() => {
       setDate((currentDate) => {
