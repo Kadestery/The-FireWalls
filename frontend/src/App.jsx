@@ -13,7 +13,7 @@ import { createProfileAction } from "./actions/createProfileAction";
 import { loginFormAction } from "./actions/loginFormAction";
 import PrivateRoute from "./generalComponents/PrivateRoute";
 
-
+//Routing to pages
 export default function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
