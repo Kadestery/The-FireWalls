@@ -5,7 +5,7 @@ import SimulatorCommands from "./homeComponents/SimulatorCommands";
 import { useLoaderData } from "react-router-dom";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
+//Homepage of simulation
 function Home() {
   const profilesAndRooms = useLoaderData();
   const [profiles, setProfiles] = useState(profilesAndRooms.profiles);
