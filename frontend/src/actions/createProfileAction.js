@@ -8,7 +8,7 @@ export async function createProfileAction({ request }) {
     username: data.get("username"),
     profile_type: data.get("profileType"),
   };
-
+  //POST profile
   try {
     const response = await fetch("/api/profile/createprofile", {
       method: "POST",
