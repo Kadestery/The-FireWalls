@@ -8,7 +8,7 @@ function Accounts() {
   const userProfiles = useLoaderData().profiles;
   const [profiles, setProfiles] = useState(userProfiles);
   const navigate = useNavigate();
-
+  //Deleting accounts
   const deleteHandler = async (event) => {
     const profileUsername = event.target.name;
 
