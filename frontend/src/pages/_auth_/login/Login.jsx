@@ -1,6 +1,6 @@
 import AuthFormHeader from "../authComponents/AuthFormHeader";
 import { Form } from "react-router-dom";
-
+//Authorization for login header
 function Login() {
   return (
     <div className="h-screen flex justify-center items-center flex-col">
