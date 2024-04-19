@@ -1,5 +1,5 @@
 import { redirect } from "react-router-dom";
-
+//Exporting function in order to reduce duplicability
 export async function createProfileAction({ request }) {
   const data = await request.formData();
   console.log(localStorage.getItem("email"), data.get("username"), data.get("profileType"));
