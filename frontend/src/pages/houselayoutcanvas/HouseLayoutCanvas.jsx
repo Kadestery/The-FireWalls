@@ -22,35 +22,6 @@
                 console.error("Please upload a JSON file.");
             }
         };
-        // useEffect(() => {
-        //     if (houseData && canvasRef.current && houseData['Smart Home'] && houseData['Smart Home'].Rooms) {
-        //         const canvas = canvasRef.current;
-        //         canvas.width = 800; // Adjust as needed
-        //         canvas.height = 1000; // Adjust based on the number of rooms
-        //         const ctx = canvas.getContext('2d');
-        //         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        //
-        //         let yOffset = 20; // Initial vertical offset for drawing
-        //
-        //         // Simplify: Just increment yOffset for each room to avoid stacking
-        //         Object.keys(houseData['Smart Home'].Rooms).forEach((roomName, index) => {
-        //             const x = 50; // Horizontal offset for all rooms
-        //             const width = 200; // Simplified width for all rooms
-        //             const height = 100; // Simplified height for all rooms
-        //             yOffset += height + 20; // Increment yOffset for each room
-        //
-        //             // Draw the rectangle for the room
-        //             ctx.fillStyle = 'skyblue';
-        //             ctx.fillRect(x, yOffset, width, height);
-        //             ctx.strokeRect(x, yOffset, width, height);
-        //
-        //             // Label the room
-        //             ctx.fillStyle = 'black';
-        //             ctx.textAlign = 'center';
-        //             ctx.fillText(roomName, x + width / 2, yOffset + height / 2);
-        //         });
-        //     }
-        // }, [houseData]);
    
         useEffect(() => {
             if (houseData && canvasRef.current && houseData['Smart Home'] && houseData['Smart Home'].Rooms) {
