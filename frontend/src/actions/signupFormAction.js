@@ -7,7 +7,7 @@ export async function signupFormAction({ request }) {
     email: data.get("email"),
     password: data.get("password"),
   };
-
+  //POST signup
   try {
     const response = await fetch("/api/auth/signup", {
       method: "POST",
