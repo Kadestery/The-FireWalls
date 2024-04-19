@@ -8,7 +8,7 @@ AuthFormHeader.propTypes = {
   linkName: PropTypes.string.isRequired,
   linkUrl: PropTypes.string.isRequired,
 };
-
+//Header Linking
 export default function AuthFormHeader({ heading, paragraph, linkName, linkUrl }) {
   return (
     <>
