@@ -4,6 +4,7 @@ import { FaUserSecret } from "react-icons/fa";
 import { FaPersonWalkingLuggage } from "react-icons/fa6";
 import PropTypes from "prop-types";
 
+//Declaring types
 ProfileIcon.propTypes = {
   profile_type: PropTypes.string.isRequired,
   className: PropTypes.string,
