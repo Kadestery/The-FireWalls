@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useRef, useEffect } from 'react';
-
+//Display logs of actions/results
 function Console({ logs }) {
 
     const endRef = useRef(null);
