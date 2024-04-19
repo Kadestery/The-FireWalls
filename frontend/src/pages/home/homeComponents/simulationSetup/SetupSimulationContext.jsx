@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-
+//File upload and setup sim
 function SetupSimulationContext({ setDate, setTemperature, setTemperatureData }) {
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
