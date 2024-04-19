@@ -1,6 +1,6 @@
 import React from 'react'
 import { Form } from 'react-router-dom'
-
+//Add profile page
 function AddProfile() {
   return (
     <div className="h-screen flex justify-center items-center flex-col">
