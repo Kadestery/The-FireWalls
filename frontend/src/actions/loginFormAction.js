@@ -6,7 +6,7 @@ export async function loginFormAction({ request }) {
       email: data.get("email"),
       password: data.get("password"),
     };
-  
+    //POST logins
     try {
       const response = await fetch("/api/auth/login", {
         method: "POST",
