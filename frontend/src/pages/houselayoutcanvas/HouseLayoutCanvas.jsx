@@ -1,12 +1,3 @@
-//function HouseLayoutCanvas() {
-    //     const hello = "hello world"
-    //     return (
-    //         <p className="text-3xl">{hello}</p>
-    //     )
-    // }
-    //
-    // export default HouseLayoutCanvas
-   
     import React, { useState, useRef, useEffect } from 'react';
    
     function HouseLayoutCanvas() {
