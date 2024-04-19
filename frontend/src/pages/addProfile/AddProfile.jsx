@@ -12,6 +12,7 @@ function AddProfile() {
           </label>
           <input required type="text" name="username" id="username" className="shadow  border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" />
         </div>
+        //Show user profile types
         <div className="mb-4">
           <label htmlFor="profileType" className="block text-gray-700 text-sm font-bold mb-2">
             User Profile Type
