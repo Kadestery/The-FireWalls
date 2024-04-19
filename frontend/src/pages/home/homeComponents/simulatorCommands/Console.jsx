@@ -27,7 +27,7 @@ function Console({ logs }) {
   }
 
 export default Console
-
+//Both room name and action on room are required
 Console.propTypes = {
     logs: PropTypes.arrayOf(
       PropTypes.shape({
