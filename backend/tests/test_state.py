@@ -33,3 +33,8 @@ class TestSecuritySystemStatePattern(unittest.TestCase):
             mocked_print.assert_any_call(f"Temperature increased significantly by 20°C. Switching to Normal Mode due to potential risk.")
             mock_notify.assert_called_with("Alert: Temperature increased by 20°C. Away mode deactivated for safety.")
             mock_set_state.assert_called()
+
+    def test_system_set_state(self):
+        with patch('builtins.print') as mocked_print:
+            self.system.set_state(AwayMode(self.system))
+            mocked_print.assert_called_with("System state changed to AwayMode.")
