@@ -21,10 +21,14 @@ def override_get_db():
         db.close()
 
 app.dependency_overrides[get_db] = override_get_db
-
 client = TestClient(app)
-
 def test_get_rooms():
     response = client.get("/room/getrooms?house_id=1")
     assert response.status_code == 200
     assert response.json() == []  # Expected result when no rooms are present
+
+
+def test_perform_room_action():
+    response = client.put("/room/room-action", json={"profile_username": "user", "room_id": 1, "action_type": "open_door"})
+    assert response.status_code == 404  # Expected when the profile or room does not exist
+
