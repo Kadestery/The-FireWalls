@@ -17,12 +17,13 @@ class TestBridgePattern(unittest.TestCase):
             device.turn_off()
             mocked_print.assert_called_with("Light turned off")
 
+    
     def test_fan_turn_on(self):
         fan = Fan()
         device = Device(fan)
         with patch('builtins.print') as mocked_print:
             device.turn_on()
-            mocked_print.assert_called_with("Fan turned on")
+            mocked_print.assert_called_with("Fan is on")
 
 
     def test_fan_turn_off(self):
@@ -30,7 +31,8 @@ class TestBridgePattern(unittest.TestCase):
         device = Device(fan)
         with patch('builtins.print') as mocked_print:
             device.turn_off()
-            mocked_print.assert_called_with("Fan turned off")
+            mocked_print.assert_called_with("Fan is off")
+
 
 if __name__ == '__main__':
     unittest.main()
