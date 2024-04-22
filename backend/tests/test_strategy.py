@@ -29,3 +29,9 @@ class TestPermissionStrategies(unittest.TestCase):
         self.assertTrue(strategy.has_permission(ActionType.CHANGE_LIGHT))
         self.assertFalse(strategy.has_permission(ActionType.CHANGE_WINDOW))
         self.assertFalse(strategy.has_permission(ActionType.CHANGE_DOOR))
+
+    def test_stranger_permission_strategy(self):
+        strategy = StrangerPermissionStrategy()
+        self.assertFalse(strategy.has_permission(ActionType.CHANGE_LIGHT))
+        self.assertFalse(strategy.has_permission(ActionType.CHANGE_WINDOW))
+        self.assertFalse(strategy.has_permission(ActionType.CHANGE_DOOR))
