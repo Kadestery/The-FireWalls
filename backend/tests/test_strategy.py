@@ -40,3 +40,18 @@ class TestPermissionStrategies(unittest.TestCase):
         context = Context()
         context.set_permission_strategy(ParentPermissionStrategy())
         self.assertTrue(context.executeStrategy(ActionType.CHANGE_LIGHT))
+
+    def test_permission_assignment_by_profile(self):
+        # This tests the function `get_permissions` in your application
+        self.assertTrue(get_permissions("parent", ActionType.CHANGE_DOOR))
+        self.assertTrue(get_permissions("child", ActionType.CHANGE_LIGHT))
+        self.assertFalse(get_permissions("child", ActionType.CHANGE_DOOR))
+        self.assertTrue(get_permissions("guest", ActionType.CHANGE_LIGHT))
+        self.assertFalse(get_permissions("guest", ActionType.CHANGE_DOOR))
+        self.assertFalse(get_permissions("stranger", ActionType.CHANGE_LIGHT))
+
+        with self.assertRaises(HTTPException):
+            get_permissions("unknown", ActionType.CHANGE_LIGHT)
+
+if __name__ == '__main__':
+    unittest.main()
