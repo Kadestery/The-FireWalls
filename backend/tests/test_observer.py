@@ -15,3 +15,12 @@ class TestObserverPattern(unittest.TestCase):
         self.assertIn(observer, subject._observers)
         subject.remove_observer(observer)
         self.assertNotIn(observer, subject._observers)
+
+    def test_temperature_sensor_notify(self):
+        sensor = TemperatureSensor()
+        observer = Observer()
+        sensor.add_observer(observer)
+
+        with patch.object(observer, 'update') as mock_update:
+            sensor.set_temperature(25)
+            mock_update.assert_called_once_with(25)
