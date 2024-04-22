@@ -38,3 +38,11 @@ class TestSecuritySystemStatePattern(unittest.TestCase):
         with patch('builtins.print') as mocked_print:
             self.system.set_state(AwayMode(self.system))
             mocked_print.assert_called_with("System state changed to AwayMode.")
+
+    def test_notify_user(self):
+        with patch('builtins.print') as mocked_print:
+            self.system.notify_user("Testing notification.")
+            mocked_print.assert_called_with("Notification to user: Testing notification.")
+
+if __name__ == '__main__':
+    unittest.main()
