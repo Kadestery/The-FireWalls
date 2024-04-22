@@ -49,7 +49,7 @@
                     ctx.textAlign = 'center';
                     ctx.fillText(roomName, x + width / 2, y + height / 2);
    
-                    // Additional features or details can be added here
+                    // Additional features or details can be added HERE
                 });
             }
         }, [houseData]);
