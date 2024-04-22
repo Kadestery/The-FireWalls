@@ -48,4 +48,12 @@ def test_login_existing_user(mock_user):
     })
     assert response.status_code == 200
     assert response.json()['email'] == "test@example.com"
-    
+
+
+def test_login_wrong_password(mock_user):
+    response = client.post("/auth/login", json={
+        "email": mock_user['email'],
+        "password": "wrongpassword"
+    })
+    assert response.status_code == 400
+    assert response.json()['detail'] == "Invalid password"
