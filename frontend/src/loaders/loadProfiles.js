@@ -16,7 +16,7 @@ export async function loadProfiles() {
       const profilesData = await profiles.json();
       const roomsData = await rooms.json();
 
-      // Assuming you want to return both profiles and rooms data
+      // Assuming you want to return both profiles and room data
       return {
         profiles: profilesData,
         rooms: roomsData,
