@@ -1,5 +1,5 @@
 import { redirect } from "react-router-dom";
-
+//Function that redirects user to login form
 export async function loginFormAction({ request }) {
     const data = await request.formData();
     const submission = {
