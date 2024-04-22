@@ -35,3 +35,8 @@ class TestCommandPattern(unittest.TestCase):
             self.assertIsInstance(get_command(ActionType.CHANGE_LIGHT), ChangeLightStateCommand)
             self.assertIsInstance(get_command(ActionType.CHANGE_WINDOW), ChangeWindowStateCommand)
             self.assertIsInstance(get_command(ActionType.CHANGE_DOOR), ChangeDoorStateCommand)
+
+    def test_get_command_invalid_type(self):
+        # Test for invalid command type
+        with self.assertRaises(HTTPException):
+            get_command("InvalidAction")
