@@ -26,3 +26,12 @@ class TestCommandPattern(unittest.TestCase):
         # Test for invalid room type
         with self.assertRaises(ValueError):
             get_room_type_class("InvalidRoom")
+
+    def test_get_command_valid_types(self):
+        # Test if commands are correctly created based on ActionType
+        with patch('your_module.Light') as MockLight, \
+                patch('your_module.Window') as MockWindow, \
+                patch('your_module.Door') as MockDoor:
+            self.assertIsInstance(get_command(ActionType.CHANGE_LIGHT), ChangeLightStateCommand)
+            self.assertIsInstance(get_command(ActionType.CHANGE_WINDOW), ChangeWindowStateCommand)
+            self.assertIsInstance(get_command(ActionType.CHANGE_DOOR), ChangeDoorStateCommand)
