@@ -17,3 +17,16 @@ class DeviceImplementation:
     def turn_off(self):
         pass
 
+class Light(DeviceImplementation):
+    def turn_on(self):
+        print("Light turned on")
+
+    def turn_off(self):
+        print("Light turned off")
+
+class Fan(DeviceImplementation):
+    def turn_on(self):
+        print("Fan turned on")
+
+    def turn_off(self):
+        print("Fan turned off")
