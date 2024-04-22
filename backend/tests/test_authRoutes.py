@@ -39,3 +39,13 @@ def test_signup_new_user(mock_user):
     })
     assert response.status_code == 200
     assert response.json()['email'] == "test@example.com"
+
+
+def test_login_existing_user(mock_user):
+    response = client.post("/auth/login", json={
+        "email": mock_user['email'],
+        "password": "password"
+    })
+    assert response.status_code == 200
+    assert response.json()['email'] == "test@example.com"
+    
