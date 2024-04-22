@@ -31,3 +31,14 @@ class TestObserverPattern(unittest.TestCase):
         with patch('builtins.print') as mocked_print:
             ui.update(25)
             mocked_print.assert_called_with("UserInterface: Temperature changed to 25°C")
+
+    def test_user_interface_alert(self):
+        ui = UserInterface()
+
+        with patch('builtins.print') as mocked_print:
+            ui.update(-5)
+            # Check if alert was triggered
+            mocked_print.assert_any_call("UserInterface Alert: Temperature is -5°C! Beware of freezing conditions.")
+
+if __name__ == '__main__':
+    unittest.main()
