@@ -24,3 +24,10 @@ class TestObserverPattern(unittest.TestCase):
         with patch.object(observer, 'update') as mock_update:
             sensor.set_temperature(25)
             mock_update.assert_called_once_with(25)
+
+    def test_user_interface_update(self):
+        ui = UserInterface()
+
+        with patch('builtins.print') as mocked_print:
+            ui.update(25)
+            mocked_print.assert_called_with("UserInterface: Temperature changed to 25°C")
