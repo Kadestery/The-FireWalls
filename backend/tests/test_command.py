@@ -21,3 +21,8 @@ class TestCommandPattern(unittest.TestCase):
         self.assertIsInstance(get_room_type_class("Kitchen"), Kitchen)
         self.assertIsInstance(get_room_type_class("Bedroom"), Bedroom)
         self.assertIsInstance(get_room_type_class("Bathroom"), Bathroom)
+
+    def test_get_room_type_class_invalid_type(self):
+        # Test for invalid room type
+        with self.assertRaises(ValueError):
+            get_room_type_class("InvalidRoom")
