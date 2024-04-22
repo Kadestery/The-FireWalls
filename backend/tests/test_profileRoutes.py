@@ -41,3 +41,12 @@ def test_delete_user_profile():
     response = client.delete("/profile/deleteprofile", json=profile_info)
     assert response.status_code == 200
     assert type(response.json()) == list  # Check the return is as expected
+
+
+def test_room_to_profile():
+    profile_info = {"profile_id": 1, "room_id": 2, "email": "john@example.com"}  # adjust fields based on your RoomToProfileUpdate schema
+    response = client.put("/profile/room-to-profile", json={"profile_info": profile_info, "house_id": 1})
+    assert response.status_code == 200
+    assert 'rooms' in response.json() and 'user_profiles' in response.json()  # Check both keys exist in the response
+
+
