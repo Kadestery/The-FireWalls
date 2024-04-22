@@ -9,3 +9,10 @@ class TestBridgePattern(unittest.TestCase):
         with patch('builtins.print') as mocked_print:
             device.turn_on()
             mocked_print.assert_called_with("Light turned on")
+            
+    def test_light_turn_off(self):
+        light = Light()
+        device = Device(light)
+        with patch('builtins.print') as mocked_print:
+            device.turn_off()
+            mocked_print.assert_called_with("Light turned off")
