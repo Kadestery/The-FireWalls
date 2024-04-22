@@ -22,3 +22,14 @@ class TestSecuritySystemStatePattern(unittest.TestCase):
             self.system.last_temperature = 30
             self.system.temperature_change(40)  # Temperature increase of 10°C, below the 15°C threshold
             mocked_print.assert_called_with("Away Mode: Current temperature is 40°C.")
+
+    def test_away_mode_temperature_change_above_threshold(self):
+        with patch('builtins.print') as mocked_print, \
+             patch.object(self.system, 'notify_user') as mock_notify, \
+             patch.object(self.system, 'set_state') as mock_set_state:
+            self.system.state = AwayMode(self.system)
+            self.system.last_temperature = 20
+            self.system.temperature_change(40)  # Temperature increase of 20°C, above the 15°C threshold
+            mocked_print.assert_any_call(f"Temperature increased significantly by 20°C. Switching to Normal Mode due to potential risk.")
+            mock_notify.assert_called_with("Alert: Temperature increased by 20°C. Away mode deactivated for safety.")
+            mock_set_state.assert_called()
