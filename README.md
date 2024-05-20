@@ -86,9 +86,3 @@ The-FireWalls
 
 ```
 
-David Onwionoko (#40167358) d-realblank  
-Eden Oliel (#40211989) eo2000  
-Ishai Cohen (#40188880) L3CH3R0  
-Jeremy Rimokh (#40110746) j3rrimmy  
-Kade Keating (#40166656) Kadestery  
-William Nazarian (#40213100) WilliamNazarian  
